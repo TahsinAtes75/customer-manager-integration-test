@@ -1,4 +1,4 @@
-package com.heyman;
+package com.runner;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
