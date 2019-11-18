@@ -40,6 +40,15 @@ public class stepDefinitions extends Base{
             throw new BackendTestException(var4, this.LOGGER);
         }
     }
+
+    @And("response body should contain the key {string} with a not-null value")
+    public void responseBodyShouldContainTheKeyWithANotNullValue(String path) throws BackendTestException {
+        try {
+            ((ValidatableResponse)((ValidatableResponse)response.then()).assertThat()).body(getGlobalValue(path), notNullValue(), new Object[0]);
+        } catch (Exception var4) {
+            throw new BackendTestException(var4, this.LOGGER);
+        }
+    }
 }
 
 
