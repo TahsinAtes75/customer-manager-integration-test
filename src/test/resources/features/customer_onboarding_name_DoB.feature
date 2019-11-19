@@ -4,30 +4,29 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
     Given I set REST API url as "https://customer-manager.dev.heymanai.com"
     And I set request header content type as JSON
 
-   ##
+           ##
     # Manually get the onboarding token from DB
     ##
   @putNameAndDoBHappyPath
   Scenario: Put Name and DoB - Happy Path
-    And I set path parameter "email" with value "ebru@trial.com"
-    And I set query parameter "token" with value "xhqys3vus57gfgspi9wubrd7urhvhsautjwzgcez6arojisncyb22tozunszcovexqxzqlauf4b9wztsklhyi1rihtwgz79slbas78xvydgejvbbn0kzynowabfbxndk"
+    And I set path parameter "email" with value "e.soysal@hymnai.com"
+    And I set query parameter "token" with value "5fw4e2i9yavy1dkgq1yslfhhgly6nq0yxq6iec1vetjravq5g0dwchjhk6k8b4jttwyrlpdrdn0dd9x67ylgnqkgf4k2ptuxjhyvrja5tczikbd4jrwigcqkinx9rcdc"
     And I set request body with information given in the following table
-      | givenNames  | Name Name       |
-      | surname     | Surname Surname |
-      | dateOfBirth | 1980-01-01      |
+      | givenNames  | Ebru       |
+      | surname     | Soysal     |
+      | dateOfBirth | 1982-01-01 |
     When I PUT request to "/v1/customers/{email}/profile"
     Then response status code should be 200
     And response body should be following json
   """
   {
-    "email": "ebru@trial.com",
-    "givenNames": "Name Name",
-    "surname": "Surname Surname",
-    "dateOfBirth": "1980-01-01",
+    "email": "e.soysal@hymnai.com",
+    "givenNames": "Ebru",
+    "surname": "Soysal",
+    "dateOfBirth": "1982-01-01",
     "status": "NAME_DOB_CAPTURED"
    }
   """
-
 
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Email Validation Test
@@ -79,7 +78,6 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsfs | token     | length must be 128 |
 
   @putNameAndDoBStatus400
-    ##### givenNames must be between 1-50 ----- test this again
   Scenario Outline: Put Name and DoB - Given Names Validation Test
     And I set path parameter "email" with value "asdf@fgh.com"
     And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
@@ -100,7 +98,6 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
 
 
   @putNameAndDoBStatus400
-    ##### surname must be between 1-50 ----- test this again
   Scenario Outline: Put Name and DoB - Surname Validation Test
     And I set path parameter "email" with value "asdf@fgh.com"
     And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
@@ -121,8 +118,6 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
 
 
   @putNameAndDoBStatus400
-    ##### instead of "Http Message Not Readable" message, a validation message can be more suitable???
-    ##### For 02-29 or 04-31 it returns 200 and updates the record with the last day of the month. This needs a decision
   Scenario Outline: Put Name and DoB - Date of Birth Validation Test
     And I set path parameter "email" with value "asdf@fgh.com"
     And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
@@ -146,8 +141,8 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | 1980-12-32  |
       | 1983-01-123 |
       | 1983-01-1   |
-#      | 1983-02-29  |
-#      | 1983-04-31  |
+      | 1983-02-29  |
+      | 1983-04-31  |
 
 
   @putNameAndDoBStatus400
@@ -173,7 +168,6 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
 
 
   @putNameAndDoBStatus401
-    ##### dateOfBirth must be YYYY-MM-DD format ---- test this again
   Scenario: Put Name and DoB - Email and Token not match
     And I set path parameter "email" with value "sample1@trial.com"
     And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"

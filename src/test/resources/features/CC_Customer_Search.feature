@@ -2,7 +2,6 @@ Feature: Contact Center - Customer Search
 
   Background:
     Given I set REST API url as "https://customer-manager.dev.heymanai.com"
-    #And I set request header content type as JSON
 
   @searchCustomerStatus400
   Scenario: Search Customer - No Search Parameters
@@ -50,7 +49,7 @@ Feature: Contact Center - Customer Search
           "accountNumber": "12345678",
           "phoneNumber": "1234567890",
           "status": "NAME_DOB_CAPTURED",
-          "number": null
+          "number": 70127954
         }
       ]
     }
