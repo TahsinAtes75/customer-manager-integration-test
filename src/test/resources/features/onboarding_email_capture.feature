@@ -3,21 +3,6 @@ Feature: Customer Onboarding - Capture Customer Email
   Background:
     Given I set REST API url as "https://customer-manager.dev.heymanai.com"
 
-  @captureEmailHappyPath
-  Scenario: Capture Email - Happy Path
-    And I set request header content type as JSON
-    And I set request body with information given in the following table
-      | email    | e.soysal@hymnai.com |
-      | make     | Apple               |
-      | model    | iphone7             |
-      | serialNo | 12345               |
-    When I POST request to "/v1/customers"
-    Then response status code should be 200
-    And response body should contain value of "e.soysal@hymnai.com" for key "email"
-    And response body should contain value of "EMAIL_CAPTURED" for key "status"
-    And response body should contain value not equal to 0 for key "number"
-
-
   @captureEmailStatus400
   Scenario Outline: Capture Email - Email Validation Test
     And I set request header content type as JSON
