@@ -48,8 +48,8 @@ Feature: Customer Onboarding - Capture Customer Phone Number
 
   @putPhoneNumberStatus409
   Scenario: Put Phone Number - Phone Number Already Exists
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "tmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
+    And I set path parameter "email" with value "test3@hymnai.com"
+    And I set query parameter "token" with value "v4xcxi2ohbss2qbtpmtioa1ov5mc9rxswbzeb965qgggkft3gvx5cy8j5nwifrk7wakmrevfptuxf8gmbfdtu3ziej2tpqbpj6wxfmiikdc87m2w2drrj1icme6yhwjr"
     And I set request body with information given in the following table
       | phone | 441234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
@@ -63,7 +63,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     And I set path parameter "email" with value "e.soysal@hymnai.com"
     And I set query parameter "token" with value "<tokenValue>"
     And I set request body with information given in the following table
-      | phone | 441234567890 |
+      | phone | 442234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
@@ -82,7 +82,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     And I set path parameter "email" with value "<emailValue>"
     And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
     And I set request body with information given in the following table
-      | phone | 441234567890 |
+      | phone | 449234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 400
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -100,7 +100,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     And I set path parameter "email" with value ""
     And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
     And I set request body with information given in the following table
-      | phone | 441234567890 |
+      | phone | 447234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 500
 
@@ -110,7 +110,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     And I set path parameter "email" with value "nocustomer@hymnai.com"
     And I set query parameter "token" with value "tmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
     And I set request body with information given in the following table
-      | phone | 441234567890 |
+      | phone | 447234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 404
     And response body should contain value of "65001" for key "code"
@@ -122,7 +122,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     And I set path parameter "email" with value "e.soysal@hymnai.com"
     And I set query parameter "token" with value "kmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
     And I set request body with information given in the following table
-      | phone | 441234567890 |
+      | phone | 447234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 401
     And response body should contain value of "65002" for key "code"
