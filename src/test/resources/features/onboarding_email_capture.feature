@@ -8,9 +8,9 @@ Feature: Customer Onboarding - Capture Customer Email
     And I set request header content type as JSON
     And I set request body with information given in the following table
       | email    | e.soysal@hymnai.com |
-      | make     | Apple          |
-      | model    | iphone7        |
-      | serialNo | 12345          |
+      | make     | Apple               |
+      | model    | iphone7             |
+      | serialNo | 12345               |
     When I POST request to "/v1/customers"
     Then response status code should be 200
     And response body should contain value of "e.soysal@hymnai.com" for key "email"

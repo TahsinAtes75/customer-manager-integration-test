@@ -10,7 +10,7 @@ Feature: Customer Onboarding - Verify Email Notification Token
   @verifyEmailHappyPath
   Scenario: Verify Email - Happy Path
     And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "6g9m3natrjs4iuqsf6kimhjtcfmda9yejzrhcmlr2p0xnixwjfc6nyyv9jwktvuqyicj60wdfq1k3g3czat55ym22jbobzgk2ecpgpge5llhkqld7w5yrgt3pliz4afi"
+    And I set query parameter "token" with value "uze7fypauwuquxjbdhwk0kf2bynkwuypknlhgci1spwn6whqtixt9a7nb07yfguylfatkcsy3kodkkes1rfk9muqhvz2xdlluyfjglyos4ku0bip4etyb5fmkdq2aqas"
     When I POST request to "/v1/customers/{email}/verify"
     Then response status code should be 200
     And response body should contain the key "onboardingToken" with a not-null value
