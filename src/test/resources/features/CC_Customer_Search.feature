@@ -139,7 +139,7 @@ Feature: Contact Center - Customer Search
     And response body should contain value of "65006" for key "code"
     And response body should contain value of "No Search Parameter Provided" for key "message"
 
-  ##### will be tested again after the bug is fixed.
+
   @searchCustomerByKeyStatus404
   Scenario Outline: Search Customer - Search by Key - Customer Not Found
     And I set path parameter "key" with value "<keyValue>"
