@@ -11,7 +11,7 @@ Feature: Contact Center - Customer Search
   Scenario: Search Customer - No Search Parameters
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65004" for key "code"
+    And response body should contain value of "65006" for key "code"
     And response body should contain value of "No Search Parameter Provided" for key "message"
 
   @searchCustomerStatus400
@@ -39,7 +39,7 @@ Feature: Contact Center - Customer Search
 
   @searchCustomerStatus200
   Scenario: Search Customer - Data Found
-    And I set query parameter "email" with value "sample3@trial.com"
+    And I set query parameter "email" with value "test3@hymnai.com"
     When I GET request to "/v1/customers"
     Then response status code should be 200
     And response body should be following json
@@ -48,12 +48,12 @@ Feature: Contact Center - Customer Search
       "totalPages": 1,
       "contents": [
         {
-          "email": "sample3@trial.com",
-          "fullName": "Name Name Surname Surname",
-          "accountNumber": "12345678",
-          "phoneNumber": "1234567890",
-          "status": "NAME_DOB_CAPTURED",
-          "number": 70127954,
+          "email": "test3@hymnai.com",
+          "fullName": "${json-unit.ignore}",
+          "accountNumber": "${json-unit.ignore}",
+          "phoneNumber": "${json-unit.ignore}",
+          "status": "${json-unit.ignore}",
+          "number": "${json-unit.ignore}",
           "key": "${json-unit.ignore}"
         }
       ]
@@ -65,7 +65,7 @@ Feature: Contact Center - Customer Search
     ############################################
   @searchCustomerByNumberStatus200
   Scenario: Search Customer - Search by Number Happy Path
-    And I set path parameter "number" with value "92145124"
+    And I set path parameter "number" with value "53426117"
     When I GET request to "/v1/customers/number/{number}"
     Then response status code should be 200
     And response body should be following json
@@ -76,7 +76,7 @@ Feature: Contact Center - Customer Search
     "accountNumber": "${json-unit.ignore}",
     "phoneNumber": "${json-unit.ignore}",
     "status": "${json-unit.ignore}",
-    "number": 92145124,
+    "number": 53426117,
     "key": "${json-unit.ignore}"
   }
   """
@@ -86,7 +86,7 @@ Feature: Contact Center - Customer Search
     And I set path parameter "number" with value "123"
     When I GET request to "/v1/customers/number/{number}"
     Then response status code should be 404
-    And response body should contain value of "65005" for key "code"
+    And response body should contain value of "65007" for key "code"
     And response body should contain value of "Customer not found with number" for key "message"
 
 
@@ -113,11 +113,11 @@ Feature: Contact Center - Customer Search
   """
   {
     "email": "test3@hymnai.com",
-    "fullName": "string string",
+    "fullName": "${json-unit.ignore}",
     "accountNumber": "${json-unit.ignore}",
-    "phoneNumber": "441122334455",
-    "status": "EMAIL_VERIFIED",
-    "number": 53426117,
+    "phoneNumber": "${json-unit.ignore}",
+    "status": "${json-unit.ignore}",
+    "number": "${json-unit.ignore}",
     "key": "f00c2df3-a836-4ed0-898e-cb90f55fdcd6"
   }
   """
