@@ -99,21 +99,26 @@ Feature: Contact Center - Customer Search
   ########################################
   ###### Search Customer by Key ##########
   ########################################
+
+  ###
+  # An Account number is added manually for the specified customer
+  ###
   @searchCustomerByKeyStatus200
   Scenario: Search Customer - Search by Key Happy Path
-    And I set path parameter "key" with value "3d70ef25-5bdc-4b7e-bb21-21f3e2a3d191"
+    And I set path parameter "key" with value "f00c2df3-a836-4ed0-898e-cb90f55fdcd6"
     When I GET request to "/v1/customers/{key}"
     Then response status code should be 200
+    And response body should contain the key "accountNumber" with a not-null value
     And response body should be following json
   """
   {
-    "email": "e.soysal@hymnai.com",
-    "fullName": "Ebru Soysal",
+    "email": "test3@hymnai.com",
+    "fullName": "string string",
     "accountNumber": "${json-unit.ignore}",
-    "phoneNumber": "445554443332",
-    "status": "TELEPHONE_CAPTURED",
-    "number": 86760053,
-    "key": "3d70ef25-5bdc-4b7e-bb21-21f3e2a3d191"
+    "phoneNumber": "441122334455",
+    "status": "EMAIL_VERIFIED",
+    "number": 53426117,
+    "key": "f00c2df3-a836-4ed0-898e-cb90f55fdcd6"
   }
   """
 
