@@ -4,29 +4,6 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
     Given I set REST API url as "https://customer-manager.dev.heymanai.com"
     And I set request header content type as JSON
 
-           ##
-    # Manually get the onboarding token from DB
-    ##
-  @putNameAndDoBHappyPath
-  Scenario: Put Name and DoB - Happy Path
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "tmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
-    And I set request body with information given in the following table
-      | givenNames  | Ebru       |
-      | surname     | Soysal     |
-      | dateOfBirth | 1982-01-01 |
-    When I PUT request to "/v1/customers/{email}/profile"
-    Then response status code should be 200
-    And response body should be following json
-  """
-  {
-    "email": "e.soysal@hymnai.com",
-    "givenNames": "Ebru",
-    "surname": "Soysal",
-    "dateOfBirth": "1982-01-01",
-    "status": "NAME_DOB_CAPTURED"
-   }
-  """
 
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Email Validation Test

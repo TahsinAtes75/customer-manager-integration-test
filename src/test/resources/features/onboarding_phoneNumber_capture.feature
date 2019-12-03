@@ -5,25 +5,6 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     And I set request header content type as JSON
 
 
-  @putPhoneNumberHappyPath
-  Scenario: Put Phone Number - Happy Path
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "tmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
-    And I set request body with information given in the following table
-      | phone | 441234567890 |
-
-    When I PUT request to "/v1/customers/{email}/phone"
-    Then response status code should be 200
-    And response body should be following json
-  """
-  {
-    "email": "e.soysal@hymnai.com",
-    "phone": "441234567890",
-    "status": "TELEPHONE_CAPTURED"
-   }
-  """
-
-
   @putPhoneNumberStatus400
   Scenario Outline: Put Phone Number - Invalid Phone Number
     And I set path parameter "email" with value "e.soysal@hymnai.com"
