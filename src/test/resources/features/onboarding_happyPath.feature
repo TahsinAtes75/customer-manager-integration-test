@@ -1,4 +1,4 @@
-Feature: Customer Onboarding - Capture Customer Email
+Feature: Customer Onboarding - Happy Path Whole Process
 
   Background:
     Given I set REST API url as "https://customer-manager.dev.heymanai.com"
@@ -19,10 +19,9 @@ Feature: Customer Onboarding - Capture Customer Email
     And response body should contain the key "key" with a not-null value
 
 
-    ##
-    # Manually get the token value from DB for the given email address
-    # Manually check DB if the status has been updated, verification token has been deleted and onboarding token has been assigned
-
+  ###
+  # Manually get the email verification token value from DB for the given email
+  ###
   @verifyEmailHappyPath
   Scenario: Verify Email - Happy Path
     And I set path parameter "email" with value "e.soysal@hymnai.com"
@@ -39,9 +38,9 @@ Feature: Customer Onboarding - Capture Customer Email
 }
     """
 
-    ##
-    # Manually get the onboarding token from DB
-    ##
+    ###
+    # Manually get the onboarding token from DB for the given email
+    ###
   @putNameAndDoBHappyPath
   Scenario: Put Name and DoB - Happy Path
     And I set request header content type as JSON
@@ -64,6 +63,9 @@ Feature: Customer Onboarding - Capture Customer Email
    }
   """
 
+  ###
+  # Manually get the onboarding token from DB for the given email
+  ###
   @putPhoneNumberHappyPath
   Scenario: Put Phone Number - Happy Path
     And I set request header content type as JSON
@@ -71,7 +73,6 @@ Feature: Customer Onboarding - Capture Customer Email
     And I set query parameter "token" with value "hx0fwpbux4zc4shxsgydrcsxwpqa2hz4s7psb5w7dfhp9xnugyiflgchrgrsnqeusmlbpf1gspydha2ztwlfmvfvfjj7b8ssxjgal4pfb6trmfrb5p2tk15ramixl1iz"
     And I set request body with information given in the following table
       | phone | 445554443332 |
-
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 200
     And response body should be following json
@@ -83,5 +84,14 @@ Feature: Customer Onboarding - Capture Customer Email
    }
   """
 
-
-  @
+  ###
+  # Manually get the phone number and sms code from DB
+  ##
+  @verifyPhoneNumberHappyPath
+  Scenario: Verify Phone Number - Happy Path
+    And I set path parameter "email" with value "e.soysal@hymnai.com"
+    And I set query parameter "phone" with value "445554443332"
+    And I set query parameter "code" with value "475639"
+    When I POST request to "/v1/customers/{email}/phone/verify"
+    Then response status code should be 200
+    And response body should contain value of "TELEPHONE_VERIFIED" for key "status"
