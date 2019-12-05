@@ -1,19 +1,20 @@
 Feature: Customer Onboarding - Happy Path Whole Process
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
+
 
   @captureEmailHappyPath
   Scenario: Capture Email - Happy Path
     And I set request header content type as JSON
     And I set request body with information given in the following table
-      | email    | e.soysal@hymnai.com |
+      | email    | testSprint2@hymnai.com |
       | make     | Apple               |
       | model    | iphone7             |
       | serialNo | 12345               |
     When I POST request to "/v1/customers"
     Then response status code should be 200
-    And response body should contain value of "e.soysal@hymnai.com" for key "email"
+    And response body should contain value of "testSprint2@hymnai.com" for key "email"
     And response body should contain value of "EMAIL_CAPTURED" for key "status"
     And response body should contain value not equal to 0 for key "number"
     And response body should contain the key "key" with a not-null value
@@ -24,15 +25,15 @@ Feature: Customer Onboarding - Happy Path Whole Process
   ###
   @verifyEmailHappyPath
   Scenario: Verify Email - Happy Path
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "zczphnyvvziqsfd5pc0jrpzdy0f3b5bsukcc0jgx7ybqcqeckjvzzlzri6fvkeealju6ef7svxztpvmns1mjy2lqzkkoo4yevg17v41klq7uljcjwvfvydx1qzcpz0cl"
+    And I set path parameter "email" with value "testSprint2@hymnai.com"
+    And I set query parameter "token" with value "xt3q6xoie8icr53rdivl7i9drnxy8brzdvtzfpwdds3fzqgjp82ufmpbyntginq7jarizuf7brrgygmuhdzfl3zivjlytvdg28buengaslqswrumpyjahezrwxebryv1"
     When I POST request to "/v1/customers/{email}/verify"
     Then response status code should be 200
     And response body should contain the key "onboardingToken" with a not-null value
     And response body should be following json
     """
     {
-      "email": "e.soysal@hymnai.com",
+      "email": "testSprint2@hymnai.com",
       "onboardingToken": "${json-unit.ignore}",
       "status": "EMAIL_VERIFIED"
 }
@@ -44,8 +45,8 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @putNameAndDoBHappyPath
   Scenario: Put Name and DoB - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "hx0fwpbux4zc4shxsgydrcsxwpqa2hz4s7psb5w7dfhp9xnugyiflgchrgrsnqeusmlbpf1gspydha2ztwlfmvfvfjj7b8ssxjgal4pfb6trmfrb5p2tk15ramixl1iz"
+    And I set path parameter "email" with value "testSprint2@hymnai.com"
+    And I set query parameter "token" with value "osdvdgueu6xa8phswtkqm96ugtwwmq4b3mne1gn1b2oljphdju1hbhlaonuqpnbc7fczhp17ipzqk454dtipdny6hiyshfozzxmgw8zfsfte3twst0aw8dbzvau3ehlg"
     And I set request body with information given in the following table
       | givenNames  | Ebru       |
       | surname     | Soysal     |
@@ -55,7 +56,7 @@ Feature: Customer Onboarding - Happy Path Whole Process
     And response body should be following json
   """
   {
-    "email": "e.soysal@hymnai.com",
+    "email": "testSprint2@hymnai.com",
     "givenNames": "Ebru",
     "surname": "Soysal",
     "dateOfBirth": "1982-01-01",
@@ -69,17 +70,17 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @putPhoneNumberHappyPath
   Scenario: Put Phone Number - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "token" with value "hx0fwpbux4zc4shxsgydrcsxwpqa2hz4s7psb5w7dfhp9xnugyiflgchrgrsnqeusmlbpf1gspydha2ztwlfmvfvfjj7b8ssxjgal4pfb6trmfrb5p2tk15ramixl1iz"
+    And I set path parameter "email" with value "testSprint2@hymnai.com"
+    And I set query parameter "token" with value "osdvdgueu6xa8phswtkqm96ugtwwmq4b3mne1gn1b2oljphdju1hbhlaonuqpnbc7fczhp17ipzqk454dtipdny6hiyshfozzxmgw8zfsfte3twst0aw8dbzvau3ehlg"
     And I set request body with information given in the following table
-      | phone | 445554443332 |
+      | phone | 441234567890 |
     When I PUT request to "/v1/customers/{email}/phone"
     Then response status code should be 200
     And response body should be following json
   """
   {
-    "email": "e.soysal@hymnai.com",
-    "phone": "445554443332",
+    "email": "testSprint2@hymnai.com",
+    "phone": "441234567890",
     "status": "TELEPHONE_CAPTURED"
    }
   """
@@ -89,9 +90,25 @@ Feature: Customer Onboarding - Happy Path Whole Process
   ##
   @verifyPhoneNumberHappyPath
   Scenario: Verify Phone Number - Happy Path
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "phone" with value "445554443332"
-    And I set query parameter "code" with value "475639"
+    And I set path parameter "email" with value "testSprint2@hymnai.com"
+    And I set query parameter "phone" with value "441234567890"
+    And I set query parameter "code" with value "725885"
     When I POST request to "/v1/customers/{email}/phone/verify"
     Then response status code should be 200
     And response body should contain value of "TELEPHONE_VERIFIED" for key "status"
+
+
+  @captureAddressHappyPath
+  Scenario: Capture Address - Happy Path
+    And I set request header content type as JSON
+    And I set path parameter "email" with value "testSprint2@hymnai.com"
+    And I set query parameter "onboardingToken" with value "osdvdgueu6xa8phswtkqm96ugtwwmq4b3mne1gn1b2oljphdju1hbhlaonuqpnbc7fczhp17ipzqk454dtipdny6hiyshfozzxmgw8zfsfte3twst0aw8dbzvau3ehlg"
+    And I set request body with information given in the following table
+      | country  | UK                |
+      | line1    | 40 Caversham Road |
+      | line2    |                   |
+      | postCode | RG1 7EB           |
+      | town     | Reading           |
+    When I POST request to "/v1/customers/{email}/addresses"
+    Then response status code should be 200
+    And response body should contain value of "ADDRESS_CAPTURED" for key "status"
