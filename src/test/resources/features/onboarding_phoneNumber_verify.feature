@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Verify Customer Phone Number
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
   @verifyPhoneNumberStatus400
   Scenario Outline: Verify Phone Number - Invalid SMS Code
@@ -41,9 +41,9 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     ### Email-phone-code are a match but SMS code is expired
   @verifyPhoneNumberStatus401
   Scenario: Verify Phone Number - SMS Code Expired
-    And I set path parameter "email" with value "b.akbas+3@hymnai.com"
-    And I set query parameter "phone" with value "447425110142"
-    And I set query parameter "code" with value "796561"
+    And I set path parameter "email" with value "testSprint2@hymnai.com"
+    And I set query parameter "phone" with value "441234567890"
+    And I set query parameter "code" with value "725885"
     When I POST request to "/v1/customers/{email}/phone/verify"
     Then response status code should be 401
     And response body should contain value of "65012" for key "code"

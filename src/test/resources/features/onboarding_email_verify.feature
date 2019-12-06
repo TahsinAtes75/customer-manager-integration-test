@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Verify Email Notification Token
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
   @verifyEmailStatus401
   Scenario: Verify Email - Email and Token not match

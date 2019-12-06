@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Capture Customer Name and Date of Birth
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
     And I set request header content type as JSON
 
 

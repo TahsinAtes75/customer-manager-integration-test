@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Capture Customer Email
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
   @captureEmailStatus400
   Scenario Outline: Capture Email - Email Validation Test
