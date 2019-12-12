@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
                 "html:target/default-cucumber-reports"
         },
 
-        tags = {"@searchCustomerByNumberStatus400"},
+        tags = {"@captureAddressHappyPath"},
 
         features = {"src/test/resources/features"
         },

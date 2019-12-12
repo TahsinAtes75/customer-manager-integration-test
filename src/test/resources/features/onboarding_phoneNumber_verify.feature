@@ -43,7 +43,7 @@ Feature: Customer Onboarding - Verify Customer Phone Number
   Scenario: Verify Phone Number - SMS Code Expired
     And I set path parameter "email" with value "testSprint2@hymnai.com"
     And I set query parameter "phone" with value "441234567890"
-    And I set query parameter "code" with value "725885"
+    And I set query parameter "code" with value "123456"
     When I POST request to "/v1/customers/{email}/phone/verify"
     Then response status code should be 401
     And response body should contain value of "65012" for key "code"
