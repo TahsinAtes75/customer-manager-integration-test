@@ -14,9 +14,9 @@ import org.junit.runner.RunWith;
                 "html:target/default-cucumber-reports"
         },
 
-        tags = {"@captureAddressHappyPath"},
+        tags = {},
 
-        features = {"src/test/resources/features"
+        features = {"src/test/resources/features/onboarding_resend_verification_token.feature"
         },
 
         glue = {"com/hymnai/backend/steps"},
