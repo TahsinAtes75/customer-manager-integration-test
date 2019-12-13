@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 
         tags = {},
 
-        features = {"src/test/resources/features/onboarding_resend_verification_token.feature"
+        features = {"src/test/resources/features"
         },
 
         glue = {"com/hymnai/backend/steps"},
