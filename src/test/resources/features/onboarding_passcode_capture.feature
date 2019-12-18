@@ -87,9 +87,9 @@ Feature: Customer Onboarding - Capture Customer Passcode
 
 
   @capturePasscodeStatus401
-  Scenario: Put Phone Number - Email and Token not match
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "onboardingToken" with value "kmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfa3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
+  Scenario: Customer Passcode - Email and Token not match
+    And I set path parameter "email" with value "Sprint3test@hymnai.com"
+    And I set query parameter "onboardingToken" with value "kmzuhpmgcfliekvpw1khhl0aewig8y8pwng3hgxhailwbrzpfa3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
     And I set request body with information given in the following table
       | passcode | 123456 |
     When I POST request to "/v1/customers/{email}/passcode"

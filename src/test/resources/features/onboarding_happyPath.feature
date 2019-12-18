@@ -117,8 +117,8 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @capturePasscodeHappyPath
   Scenario: Capture Passcode - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "Sprint2Demo@hymnai.com"
-    And I set query parameter "onboardingToken" with value "akxjyh1pjs2ss0u9hsopdqnvqibp70z9kdecko0avsnvtrvezkqdfj1i6epshjyp5xu949zi2ysyki0igefcvqony6dvcbuirgwzkbgo1pgbw1ok1ci4vfkgoh7jmbqf"
+    And I set path parameter "email" with value "Sprint3test@hymnai.com"
+    And I set query parameter "onboardingToken" with value "cnetgu8njizvvfm1nsb8b7aq3zp5lidfsxgfmbdcawkpoqlcd2g0onymkkp4gqbgwkre3vi5zpxkfbilx5nevdmytkv1kxpe3mg6e2qygbxmw1memlpvl9tbkjooaxdb"
     And I set request body with information given in the following table
       | passcode | 123456 |
     When I POST request to "/v1/customers/{email}/passcode"
