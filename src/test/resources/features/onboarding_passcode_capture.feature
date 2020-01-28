@@ -1,64 +1,35 @@
 Feature: Customer Onboarding - Capture Customer Passcode
 
   Background:
-    Given I set REST API url as "https://customer-manager.test.heymanai.com"
+    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
     And I set request header content type as JSON
 
 
-  @capturePasscodeStatus400
-  Scenario Outline: Customer Passcode - Email Validation Test
-    And I set path parameter "email" with value "<emailValue>"
-    And I set query parameter "onboardingToken" with value "tmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
+  @capturePasscodeStatus401
+  Scenario Outline: Put Name and DoB - Onboarding token validation
+    And I set header "authorization" parameter with value "<tokenValue>"
     And I set request body with information given in the following table
-      | passcode | 123456 |
-    When I POST request to "/v1/customers/{email}/passcode"
-    Then response status code should be 400
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+      | phone | 447234567890 |
+    When I PUT request to "/v1/customers/phone"
+    Then response status code should be 401
+    And response body should contain value of "67555" for key "code"
+    And response body should contain value of "Access token is invalid" for key "message"
 
     Examples:
-      | emailValue                                          | fieldName | message                             |
-      | sdfhghg                                             | email     | must be a well-formed email address |
-      | a@b.c                                               | email     | size must be between 6 and 50       |
-      | fsfkhsjfkhsjadfsdfsfkhsjfkhssdfsfkfkhsj@bfsfsdf.com | email     | size must be between 6 and 50       |
+      | tokenValue                                                                                                                                                                                                                                                                          |
+      |                                                                                                                                                                                                                                                                                     |
+      | asd                                                                                                                                                                                                                                                                                 |
+      | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
+      | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
 
-
-  @capturePasscodeStatus500
-  Scenario: Customer Passcode - Empty Email
-    And I set path parameter "email" with value ""
-    And I set query parameter "onboardingToken" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
-    And I set request body with information given in the following table
-      | passcode | 123456 |
-    When I POST request to "/v1/customers/{email}/passcode"
-    Then response status code should be 500
-
-
-  @capturePasscodeStatus400
-  Scenario Outline: Customer Passcode - Token Validation Test
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "onboardingToken" with value "<tokenValue>"
-    And I set request body with information given in the following table
-      | passcode | 123456 |
-    When I POST request to "/v1/customers/{email}/passcode"
-    Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "onboardingToken" for key "validationErrors[0].field"
-    And response body should contain value of "length must be 128" for key "validationErrors[0].message"
-
-    Examples:
-      | tokenValue                                                                                                                        |
-      |                                                                                                                                   |
-      | asd                                                                                                                               |
-      | asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsfs |
 
 
   @capturePasscodeStatus400
   Scenario Outline: Customer Passcode - Passcode Validation Test
-    And I set path parameter "email" with value "e.soysal@hymnai.com"
-    And I set query parameter "onboardingToken" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTU4NzkxMzYyOX0.O_2qcM_7AGky_y7ekKeCxjE1NYaXxx--sGKrKmpqRARlmq65SJoonWXYZ-m8ksBkObn7MXnxx75JQIIhsCvR1w"
     And I set request body with information given in the following table
       | passcode | <passcodeValue> |
-    When I POST request to "/v1/customers/{email}/passcode"
+    When I POST request to "/v1/customers/passcode"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "passcode" for key "validationErrors[0].field"
@@ -74,25 +45,15 @@ Feature: Customer Onboarding - Capture Customer Passcode
       | 12345@        |
 
 
-  @capturePasscodeStatus404
-  Scenario: Customer Passcode - No Customer Found
-    And I set path parameter "email" with value "nocustomer@hymnai.com"
-    And I set query parameter "onboardingToken" with value "tmzuhpmgcfliekvpw1khhl0mewig8y8pwng3hgxhailwbrzpfx3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
+
+  # Customer's status is EMAIL_CAPTURED
+  # Onboarding token has been taken without verifying the email
+  @capturePasscodeStatus400
+  Scenario: Put Name and DoB - Email is not verified
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTU4Nzk4NzAyN30.F_3u6idy5hKws9U4N8ACwUFl21mRBfNqmm7OSi3mMoaqz6tO-GjeGRjHCb5LQdk432nHtHlo3YCBvKTbyrN9bw"
     And I set request body with information given in the following table
       | passcode | 123456 |
-    When I POST request to "/v1/customers/{email}/passcode"
-    Then response status code should be 404
-    And response body should contain value of "65001" for key "code"
-    And response body should contain value of "Customer not found with nocustomer@hymnai.com" for key "message"
-
-
-  @capturePasscodeStatus401
-  Scenario: Customer Passcode - Email and Token not match
-    And I set path parameter "email" with value "Sprint3test@hymnai.com"
-    And I set query parameter "onboardingToken" with value "kmzuhpmgcfliekvpw1khhl0aewig8y8pwng3hgxhailwbrzpfa3c8zamcj2c0wopb9tc4mz5mx0vuxeki94cjefroswgtufd5gmxojoxhaxlwkfeq0pgucjbmagt8acz"
-    And I set request body with information given in the following table
-      | passcode | 123456 |
-    When I POST request to "/v1/customers/{email}/passcode"
-    Then response status code should be 401
-    And response body should contain value of "65002" for key "code"
-    And response body should contain value of "Could not verify" for key "message"
+    When I POST request to "/v1/customers/passcode"
+    Then response status code should be 400
+    And response body should contain value of "65009" for key "code"
+    And response body should contain value of "The customer state is incompatible" for key "message"
