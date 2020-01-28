@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.*;
 
 public class stepDefinitions extends Base{
 
+    private static final String AUTHORIZATION = "authorization";
     private final Logger LOGGER = LoggerFactory.getLogger(AssertionSteps.class);
     static Map<Integer, Integer> globalValues = new HashMap();
     static final String BASE_URL = "https://banking-web.dev.heymanai.com/email-verification/";
@@ -53,26 +54,35 @@ public class stepDefinitions extends Base{
     }
 
     @When("I POST request to {string} with random email")
-    public void iCreatedRandomCustomer(String url) throws Exception {
-        Inbox inbox = EmailUtil.createInbox();
-        String request = createRequestAsJson(inbox.getEmailAddress());
-        reqSpec.given().body(request);
-        response = (Response)reqSpec.when().post(url, new Object[0]);
-        Email email = EmailUtil.getLatestEmail(inbox.getEmailAddress());
-        String jwt = parseJWT(email.getBody());
-        Base.globalValues.put("emailVerificationJWT", jwt);
-        addHeaderParameter("authorization", jwt);
+    public void generateAndCaptureEmailAndAddJwtToHeader(String url) throws BackendTestException {
+        try {
+            EmailProvider emailProvider = new EmailProvider();
+            Inbox inbox = emailProvider.createInbox();
+            String request = createRequestAsJson(inbox.getEmailAddress());
+            reqSpec.given().body(request);
+            response = (Response)reqSpec.when().post(url, new Object[0]);
+            Email email = emailProvider.getLatestEmail(inbox.getEmailAddress());
+            String jwt = parseJWT(email.getBody());
+            addHeaderParameter(AUTHORIZATION, jwt);
+        } catch (Exception e) {
+            throw new BackendTestException(e, this.LOGGER);
+        }
     }
 
-    @When("When I POST request with email {string} to {string}")
-    public void iCreatedRandomCustomer(String emailAddress, String url) throws Exception {
-        String request = createRequestAsJson(emailAddress);
-        reqSpec.given().body(request);
-        response = (Response) reqSpec.when().post(url, new Object[0]);
-        Email email = EmailUtil.getLatestEmail(emailAddress);
-        String jwt = parseJWT(email.getBody());
-        Base.globalValues.put("emailVerificationJWT", jwt);
-        addHeaderParameter("authorization", jwt);
+    @When("I POST request with email {string} to {string}")
+    public void captureEmailAndAddJwtToHeader(String emailAddress, String url) throws BackendTestException {
+        try {
+            EmailProvider emailProvider = new EmailProvider();
+            String request = createRequestAsJson(emailAddress);
+            reqSpec.given().body(request);
+            response = (Response) reqSpec.when().post(url, new Object[0]);
+            Email email = emailProvider.getLatestEmail(emailAddress);
+            String jwt = parseJWT(email.getBody());
+            addHeaderParameter(AUTHORIZATION, jwt);
+            Base.globalValues.put(AUTHORIZATION, jwt);
+        } catch (Exception e) {
+            throw new BackendTestException(e, this.LOGGER);
+        }
     }
 
     private String parseJWT(String message) {

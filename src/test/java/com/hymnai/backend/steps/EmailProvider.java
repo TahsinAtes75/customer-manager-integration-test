@@ -8,24 +8,23 @@ import mailslurpapi.CommonOperationsApi;
 import mailslurpmodels.Email;
 import mailslurpmodels.Inbox;
 
-public class EmailUtil {
+public class EmailProvider {
 
- static {
-   ApiClient defaultClient = Configuration.getDefaultApiClient();
-   defaultClient.setConnectTimeout(60000);
-   ApiKeyAuth API_KEY = (ApiKeyAuth) defaultClient.getAuthentication("API_KEY");
-   API_KEY.setApiKey("a735d0252c8f419597e11874bbdede7ce50d66b8e1a4b7f7b221268f0f1ee996");
- }
+  public EmailProvider() {
+    MailSlurpConfiguration configuration = new MailSlurpConfiguration();
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setConnectTimeout(configuration.TIME_OUT);
+    ApiKeyAuth API_KEY = (ApiKeyAuth) defaultClient.getAuthentication(configuration.AUTH_NAME);
+    API_KEY.setApiKey(configuration.API_KEY_STRING);
+  }
 
-  private EmailUtil() { }
-
-  public static Inbox createInbox() throws Exception{
+  public Inbox createInbox() throws Exception {
     // create an email address
     CommonOperationsApi apiInstance = new CommonOperationsApi();
     return apiInstance.createNewEmailAddressUsingPOST();
   }
 
-  public static Email getLatestEmail(String inboxEmailAddress) throws Exception{
+  public Email getLatestEmail(String inboxEmailAddress) throws Exception {
     // create an email address
     CommonOperationsApi apiInstance = new CommonOperationsApi();
     return apiInstance.fetchLatestEmailUsingGET(inboxEmailAddress, null);
