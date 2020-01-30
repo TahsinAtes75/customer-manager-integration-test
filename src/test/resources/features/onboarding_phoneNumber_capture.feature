@@ -25,7 +25,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
 
   @putPhoneNumberStatus400
   Scenario Outline: Put Phone Number - Invalid Phone Number
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxB"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | phone | <phoneValue> |
     When I PUT request to "/v1/customers/phone"
@@ -46,13 +46,24 @@ Feature: Customer Onboarding - Capture Customer Phone Number
 
   @putPhoneNumberStatus409
   Scenario: Put Phone Number - Phone Number Already Exists
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI2MzcwNjdhOC02MWU0LTQ2MDktODIxNC0zYzYwYjBjYTcwZmUiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzYyNzgsImV4cCI6MTU4NzkxMjI3OH0.6n92BTcgS7mf_1f9I0g5e1bqw8cnyYGvgnBO4gLEa5KIAeiDyVewq6wT5YTpJ1GpR0Fwzp3FiywjfjjgbdZF1Q"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI2MzcwNjdhOC02MWU0LTQ2MDktODIxNC0zYzYwYjBjYTcwZmUiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzYyNzgsImV4cCI6MTg5NTk4MjY0Mn0.kX5uHr3HrMkMVnx4lTYPzyBlFl3-kMA5RffZYgbNfh4mT8DtwP3WzgZGdXiZ_jK2R9BS1r2mNMJiLMbgH_pwog"
     And I set request body with information given in the following table
       | phone | 441111111111 |
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 409
     And response body should contain value of "65010" for key "code"
     And response body should contain value of "Phone already exists" for key "message"
+
+
+  @putPhoneNumberStatus404
+  Scenario: Put Phone Number - Customer not found
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
+    And I set request body with information given in the following table
+      | phone | 441111111111 |
+    When I PUT request to "/v1/customers/phone"
+    Then response status code should be 404
+    And response body should contain value of "65011" for key "code"
+    And response body should contain value of "Customer not found with key: 93d22764-8270-4458-bcc0-775fbcdae6c2" for key "message"
 
 
 
@@ -63,7 +74,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   ###########################
   @resendSmsCodeStatus200
   Scenario: Resend SMS Code
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIxYWUzYjk2YS0wOGRiLTRiYzktOWZiOS1lMDgyZmUzYjdhMTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxNDIzOTQsImV4cCI6MTU4NzkxODM5NH0.9pljK1mYJukb7kWKaI--3Jsp_rE--aqjSTxsVhkpLSTYYjw8fqVtp1zCk0R65X7d6Ld9jP2auZY6c86REHxoQg"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIxYWUzYjk2YS0wOGRiLTRiYzktOWZiOS1lMDgyZmUzYjdhMTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxNDIzOTQsImV4cCI6MTg5NTk4MjY0Mn0.jnmu3XCfOfhkRVj6PJnAoqRjw_3_wsIDXDr6_3e1TO4gshJEY8hVlHPidB_srqQllNsUjsP2ZhXN99rveZGH2w"
     And I set request body with information given in the following table
       | phone | 445555555555 |
     When I PUT request to "/v1/customers/phone"
@@ -86,7 +97,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   ###########################
   @resendSmsCodeStatus400
   Scenario: Resend SMS Code - Status is incompatible
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJjZDM5M2IyYS1mMTNmLTRhMGItOWMyNi1hYWFiNzg1N2RiMGIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxNDMyNzUsImV4cCI6MTU4NzkxOTI3NX0.8jGmc-VHBdp0fOztgwGkVEmIwEWRaKzngRRL_9BtPqrAnQA6SGbhlygx50kKHUq-D9kAUyBlyM0ajjsPkyGhWQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJjZDM5M2IyYS1mMTNmLTRhMGItOWMyNi1hYWFiNzg1N2RiMGIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxNDMyNzUsImV4cCI6MTg5NTk4MjY0Mn0.soqg9_SRkvJL4_L9nlPVHsAdizBP8fWhgVRIewzt64XCCg53yMpIho1q4BjNoBSzKViLLfcAAbgigHoMvh0lLw"
     And I set request body with information given in the following table
       | phone | 443333333332 |
     When I PUT request to "/v1/customers/phone"

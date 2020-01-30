@@ -31,7 +31,7 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
   #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Given Names Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | <givenNamesValue> |
       | surname     | Surname Surname   |
@@ -53,7 +53,7 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
   #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Surname Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | Name Name      |
       | surname     | <surnameValue> |
@@ -75,7 +75,7 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
   #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Date of Birth Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |
@@ -106,7 +106,7 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
   #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Date of Birth Rules Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |
@@ -130,7 +130,7 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
   # Onboarding token has been taken without verifying the email
   @putNameAndDoBStatus400
   Scenario: Put Name and DoB - Email is not verified
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTU4Nzk4NzAyN30.F_3u6idy5hKws9U4N8ACwUFl21mRBfNqmm7OSi3mMoaqz6tO-GjeGRjHCb5LQdk432nHtHlo3YCBvKTbyrN9bw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTg5NTk4MjY0Mn0.5gPffCdd9zLKl-hhjQApIbdkhsw_vR_Mz_w5W728qzEHZb1LsipB1Wc5h6Irdk-FZAKMQrviObC7Q6wsSFe74A"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |

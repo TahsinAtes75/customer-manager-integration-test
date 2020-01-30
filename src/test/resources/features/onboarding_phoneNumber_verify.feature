@@ -24,7 +24,7 @@ Feature: Customer Onboarding - Verify Customer Phone Number
 
   @verifyPhoneNumberStatus400
   Scenario Outline: Verify Phone Number - SMS Code Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set query parameter "phone" with value "441234567890"
     And I set query parameter "code" with value "<smsValue>"
     When I POST request to "/v1/customers/phone/verify"
@@ -43,7 +43,7 @@ Feature: Customer Onboarding - Verify Customer Phone Number
 
   @verifyPhoneNumberStatus400
   Scenario Outline: Verify Phone Number - Phone Number Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI0MWUyZWEyYi0zMGE5LTQwZmMtYWI1Ni0xYjk2OTUwZDQwYzMiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3OTIyMjYsImV4cCI6MTU4NzU2ODIyNn0.xUZaU_eUnf6mbZ5KoV3iBBPZlj5I3MJuJeEZfc9HQRuIUZfxCt14XwqwxkBC6KI7In6NBLpjezAy3Zv_E6Vi5g"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set query parameter "phone" with value "<phoneValue>"
     And I set query parameter "code" with value "584625"
     When I POST request to "/v1/customers/phone/verify"
@@ -65,7 +65,7 @@ Feature: Customer Onboarding - Verify Customer Phone Number
 
   @verifyPhoneNumberStatus401
   Scenario Outline: Verify Phone Number - SMS Code Not Verified
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTU4NzU1NDQ0Nn0.uro7mTcyhMjlyFmRGft_l9oYW9HOQOgMgIf79cE9hhAFNGeLMlUsVWH9VfgzHiFwcV5iGPnuBdixMzJAokywxA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set query parameter "phone" with value "445554443332"
     And I set query parameter "code" with value "<smsValue>"
     When I POST request to "/v1/customers/phone/verify"
@@ -86,7 +86,7 @@ Feature: Customer Onboarding - Verify Customer Phone Number
   #####
   @verifyPhoneNumberStatus401
   Scenario: Verify Phone Number - SMS Code Expired
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTU4NzkxMzYyOX0.O_2qcM_7AGky_y7ekKeCxjE1NYaXxx--sGKrKmpqRARlmq65SJoonWXYZ-m8ksBkObn7MXnxx75JQIIhsCvR1w"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set query parameter "phone" with value "443333333333"
     And I set query parameter "code" with value "045983"
     When I POST request to "/v1/customers/phone/verify"
@@ -98,7 +98,7 @@ Feature: Customer Onboarding - Verify Customer Phone Number
 
   @verifyPhoneNumberStatus401
   Scenario Outline: Verify Phone Number - Token, Phone, SmsCode do not match
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI0MWUyZWEyYi0zMGE5LTQwZmMtYWI1Ni0xYjk2OTUwZDQwYzMiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3OTIyMjYsImV4cCI6MTU4NzU2ODIyNn0.xUZaU_eUnf6mbZ5KoV3iBBPZlj5I3MJuJeEZfc9HQRuIUZfxCt14XwqwxkBC6KI7In6NBLpjezAy3Zv_E6Vi5g"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI0MWUyZWEyYi0zMGE5LTQwZmMtYWI1Ni0xYjk2OTUwZDQwYzMiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3OTIyMjYsImV4cCI6MTg5NTk4MjY0Mn0.-25Rv0vmSErVr1ZwF328ErbsG-AGvtUb5eKO-TeuA8u97fsPpPpbSaNo1SwJHZ7qXRTLH1BtaYyQtLqV8A7buw"
     And I set query parameter "phone" with value "<phoneValue>"
     And I set query parameter "code" with value "<codeValue>"
     When I POST request to "/v1/customers/phone/verify"

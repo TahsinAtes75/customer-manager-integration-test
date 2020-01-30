@@ -26,7 +26,7 @@ Feature: Customer Onboarding - Capture Customer Passcode
 
   @capturePasscodeStatus400
   Scenario Outline: Customer Passcode - Passcode Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTU4NzkxMzYyOX0.O_2qcM_7AGky_y7ekKeCxjE1NYaXxx--sGKrKmpqRARlmq65SJoonWXYZ-m8ksBkObn7MXnxx75JQIIhsCvR1w"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
       | passcode | <passcodeValue> |
     When I POST request to "/v1/customers/passcode"
@@ -47,10 +47,11 @@ Feature: Customer Onboarding - Capture Customer Passcode
 
 
   # Customer's status is EMAIL_CAPTURED
+  # Customer: onb_email_captured@hymnai.com
   # Onboarding token has been taken without verifying the email
   @capturePasscodeStatus400
   Scenario: Put Name and DoB - Email is not verified
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTU4Nzk4NzAyN30.F_3u6idy5hKws9U4N8ACwUFl21mRBfNqmm7OSi3mMoaqz6tO-GjeGRjHCb5LQdk432nHtHlo3YCBvKTbyrN9bw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTg5NTk4MjY0Mn0.5gPffCdd9zLKl-hhjQApIbdkhsw_vR_Mz_w5W728qzEHZb1LsipB1Wc5h6Irdk-FZAKMQrviObC7Q6wsSFe74A"
     And I set request body with information given in the following table
       | passcode | 123456 |
     When I POST request to "/v1/customers/passcode"
