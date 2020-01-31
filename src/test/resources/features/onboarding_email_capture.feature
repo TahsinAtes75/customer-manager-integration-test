@@ -2,6 +2,27 @@ Feature: Customer Onboarding - Capture Customer Email
 
   Background:
     Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+
+  @captureAndVerifyRandomEmail
+  Scenario: Capture Email - Email Validation With Random Email Addresses Test
+    And I set request header content type as JSON
+    When I POST request to "/v1/customers/onboarding" with random email
+    Then response status code should be 200
+
+    Given I set request header content type as JSON
+    When I POST request to "/v1/customers/verify"
+    Then response status code should be 200
+
+  @captureAndVerifyGivenEmail
+  Scenario: Capture Email - Email Validation With Random Email Addresses Test
+    And I set request header content type as JSON
+    When I POST request with email "f5e00695-6edd-4260-8e7d-7d249d4bc4d7@mailslurp.com" to "/v1/customers/onboarding"
+    Then response status code should be 200
+
+    Given I set request header content type as JSON
+    When I POST request to "/v1/customers/verify"
+    Then response status code should be 200
 
   @captureEmailStatus400
   Scenario Outline: Capture Email - Email Validation Test
@@ -11,7 +32,7 @@ Feature: Customer Onboarding - Capture Customer Email
       | make     | Apple    |
       | model    | iPhone7+ |
       | serialNo | ASD1234  |
-    When I POST request to "/v1/customers/onboarding"
+    When I POST request to "/v1/customers"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -33,7 +54,7 @@ Feature: Customer Onboarding - Capture Customer Email
       | make     | <make>      |
       | model    | iPhone7+    |
       | serialNo | ASD1234     |
-    When I POST request to "/v1/customers/onboarding"
+    When I POST request to "/v1/customers"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -53,7 +74,7 @@ Feature: Customer Onboarding - Capture Customer Email
       | make     | Apple       |
       | model    | <model>     |
       | serialNo | ASD1234     |
-    When I POST request to "/v1/customers/onboarding"
+    When I POST request to "/v1/customers"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -73,7 +94,7 @@ Feature: Customer Onboarding - Capture Customer Email
       | make     | Apple       |
       | model    | iPhone7+    |
       | serialNo | <serialNo>  |
-    When I POST request to "/v1/customers/onboarding"
+    When I POST request to "/v1/customers"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -83,4 +104,8 @@ Feature: Customer Onboarding - Capture Customer Email
       | serialNo                                            | fieldName | message                       |
       |                                                     | serialNo  | size must be between 1 and 50 |
       | sdssfsdf1233476487564783-56234563456-76573657836826 | serialNo  | size must be between 1 and 50 |
+
+
+
+
 

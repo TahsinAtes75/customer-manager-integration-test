@@ -9,10 +9,13 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 11
 
 repositories {
+    maven { url 'https://jitpack.io' }
     mavenCentral()
 }
 
 dependencies {
+
+    compile 'com.github.mailslurp:swagger-sdk-java:900a94e754'
 
     testCompile 'junit:junit:4.12'
     testCompile 'net.javacrumbs.json-unit:json-unit-fluent:2.8.0'
@@ -30,7 +33,6 @@ dependencies {
     testImplementation 'ch.qos.logback:logback-classic:1.2.3'
 
     compile files('libs/backend-test-2.0.0-SNAPSHOT.jar')
-
 
 }
 
