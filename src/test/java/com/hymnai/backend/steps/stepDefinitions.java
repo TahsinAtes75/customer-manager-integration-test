@@ -5,10 +5,16 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import mailslurpmodels.Email;
 import mailslurpmodels.Inbox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.hamcrest.Matchers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +22,8 @@ import java.util.Map;
 import static org.hamcrest.Matchers.*;
 
 public class stepDefinitions extends Base{
+
+    private String variable = null;
 
     private static final String AUTHORIZATION = "authorization";
     private final Logger LOGGER = LoggerFactory.getLogger(AssertionSteps.class);

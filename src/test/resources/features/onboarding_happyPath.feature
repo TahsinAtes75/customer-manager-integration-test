@@ -1,62 +1,57 @@
 Feature: Customer Onboarding - Happy Path Whole Process
 
   Background:
-    Given I set REST API url as "https://customer-manager.test.heymanai.com"
+    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
 
 
   @captureEmailHappyPath
   Scenario: Capture Email - Happy Path
     And I set request header content type as JSON
     And I set request body with information given in the following table
-      | email    | Sprint1Demo@hymnai.com |
-      | make     | Apple                  |
-      | model    | iphone7                |
-      | serialNo | 12345                  |
-    When I POST request to "/v1/customers"
+      | email    | onb_happy_path_2@hymnai.com |
+      | make     | Apple                       |
+      | model    | iphone7                     |
+      | serialNo | 12345                       |
+    When I POST request to "/v1/customers/onboarding"
     Then response status code should be 200
-    And response body should contain value of "Sprint1Demo@hymnai.com" for key "email"
+    And response body should contain value of "onb_happy_path_2@hymnai.com" for key "email"
     And response body should contain value of "EMAIL_CAPTURED" for key "status"
-    And response body should contain value not equal to 0 for key "number"
     And response body should contain the key "key" with a not-null value
 
 
   ###
-  # Manually get the email verification token value from DB for the given email
+  # Manually get the verification token value from DB for the given email
   ###
   @verifyEmailHappyPath
   Scenario: Verify Email - Happy Path
-    And I set path parameter "email" with value "Sprint1Demo@hymnai.com"
-    And I set query parameter "token" with value "dopc3wps2pwjdzwnzhgqgasyz8sznbi8mhvnrfyiafu2vi5el7fyorkan0nkmha2leadathlglet7dccoemvs2ai8xxffrisitfa9mhnlbbh9lvskeiowflnrn3utffk"
-    When I POST request to "/v1/customers/{email}/verify"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlMmRhNmQ4OC1jNzU3LTRhMGQtODhiYi05MzE4NThiNDNmOTkiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDIyMzExNywiZXhwIjoxNTgwMzA5NTE3fQ.jh5uVBmod9JLYgSv9HgnQBJrOpRWq0VAkbIXZ_E6T1XkINAAZBuOOPl4dqD_of1jPWwBwFWVBS6_rSnAFJ08-g"
+    When I POST request to "/v1/customers/verify"
     Then response status code should be 200
-    And response body should contain the key "onboardingToken" with a not-null value
     And response body should be following json
     """
     {
-      "email": "Sprint1Demo@hymnai.com",
-      "onboardingToken": "${json-unit.ignore}",
+      "email": "onb_happy_path_2@hymnai.com",
       "status": "EMAIL_VERIFIED"
 }
     """
 
     ###
-    # Manually get the onboarding token from DB for the given email
+    # Manually get the onboarding token from API with the verification token above
     ###
   @putNameAndDoBHappyPath
   Scenario: Put Name and DoB - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "Sprint1Demo@hymnai.com"
-    And I set query parameter "token" with value "tr2wj5b57r72rhry9z3njjoab8l7ncy9a7yxyr0jl4pkftiifszpoesti9ffas9hg4gcxaoratyevkejhsiqentyormrlssfnai3flsungdfrgqtismkdy07gtodm6g5"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlMmRhNmQ4OC1jNzU3LTRhMGQtODhiYi05MzE4NThiNDNmOTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMjM2MjYsImV4cCI6MTU4Nzk5OTYyNn0.Xm8qZHEXYLFs34H7R4UT2r4Q_ohU2oOQpLjjSGq2sOaWc6gNl86jde9KJbPPBOv3kRhERwsJdupsaZze21ygcQ"
     And I set request body with information given in the following table
       | givenNames  | Ebru       |
       | surname     | Soysal     |
       | dateOfBirth | 1982-01-01 |
-    When I PUT request to "/v1/customers/{email}/profile"
+    When I PUT request to "/v1/customers/profile"
     Then response status code should be 200
     And response body should be following json
   """
   {
-    "email": "Sprint1Demo@hymnai.com",
+    "email": "onb_happy_path_2@hymnai.com",
     "givenNames": "Ebru",
     "surname": "Soysal",
     "dateOfBirth": "1982-01-01",
@@ -65,62 +60,66 @@ Feature: Customer Onboarding - Happy Path Whole Process
   """
 
   ###
-  # Manually get the onboarding token from DB for the given email
+  # Manually get the onboarding token from API with the verification token above
   ###
   @putPhoneNumberHappyPath
   Scenario: Put Phone Number - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "Sprint2Demo@hymnai.com"
-    And I set query parameter "token" with value "akxjyh1pjs2ss0u9hsopdqnvqibp70z9kdecko0avsnvtrvezkqdfj1i6epshjyp5xu949zi2ysyki0igefcvqony6dvcbuirgwzkbgo1pgbw1ok1ci4vfkgoh7jmbqf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlMmRhNmQ4OC1jNzU3LTRhMGQtODhiYi05MzE4NThiNDNmOTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMjM2MjYsImV4cCI6MTU4Nzk5OTYyNn0.Xm8qZHEXYLFs34H7R4UT2r4Q_ohU2oOQpLjjSGq2sOaWc6gNl86jde9KJbPPBOv3kRhERwsJdupsaZze21ygcQ"
     And I set request body with information given in the following table
-      | phone | 447423829367 |
-    When I PUT request to "/v1/customers/{email}/phone"
+      | phone | 449999999999 |
+    When I PUT request to "/v1/customers/phone"
     Then response status code should be 200
     And response body should be following json
   """
   {
-    "email": "Sprint2Demo@hymnai.com",
-    "phone": "447423829367",
+    "email": "onb_happy_path_2@hymnai.com",
+    "phone": "449999999999",
     "status": "TELEPHONE_CAPTURED"
    }
   """
 
   ###
-  # Manually get the phone number and sms code from DB
-  ##
+  # Manually get the onboarding token from API with the verification token above
+  # Manually get the sms code from DB
+  ###
   @verifyPhoneNumberHappyPath
   Scenario: Verify Phone Number - Happy Path
-    And I set path parameter "email" with value "Sprint2Demo@hymnai.com"
-    And I set query parameter "phone" with value "447423829367"
-    And I set query parameter "code" with value "882987"
-    When I POST request to "/v1/customers/{email}/phone/verify"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlMmRhNmQ4OC1jNzU3LTRhMGQtODhiYi05MzE4NThiNDNmOTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMjM2MjYsImV4cCI6MTU4Nzk5OTYyNn0.Xm8qZHEXYLFs34H7R4UT2r4Q_ohU2oOQpLjjSGq2sOaWc6gNl86jde9KJbPPBOv3kRhERwsJdupsaZze21ygcQ"
+    And I set query parameter "phone" with value "449999999999"
+    And I set query parameter "code" with value "682518"
+    When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 200
     And response body should contain value of "TELEPHONE_VERIFIED" for key "status"
 
 
+  ###
+  # Manually get the onboarding token from API with the verification token above
+  ###
   @captureAddressHappyPath
   Scenario: Capture Address - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "Sprint2Demo@hymnai.com"
-    And I set query parameter "onboardingToken" with value "akxjyh1pjs2ss0u9hsopdqnvqibp70z9kdecko0avsnvtrvezkqdfj1i6epshjyp5xu949zi2ysyki0igefcvqony6dvcbuirgwzkbgo1pgbw1ok1ci4vfkgoh7jmbqf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlMmRhNmQ4OC1jNzU3LTRhMGQtODhiYi05MzE4NThiNDNmOTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMjM2MjYsImV4cCI6MTU4Nzk5OTYyNn0.Xm8qZHEXYLFs34H7R4UT2r4Q_ohU2oOQpLjjSGq2sOaWc6gNl86jde9KJbPPBOv3kRhERwsJdupsaZze21ygcQ"
     And I set request body with information given in the following table
-      | country  | UK                |
-      | line1    | 40 Caversham Road |
-      | line2    |                   |
-      | postCode | RG1 7EB           |
-      | town     | Reading           |
-    When I POST request to "/v1/customers/{email}/addresses"
+      | country  | UK             |
+      | line1    | 3 Queen's Road |
+      | line2    |                |
+      | postCode | RG1 4AP        |
+      | town     | Reading        |
+    When I POST request to "/v1/customers/addresses"
     Then response status code should be 200
     And response body should contain value of "ADDRESS_CAPTURED" for key "status"
 
 
+  ###
+  # Manually get the onboarding token from API with the verification token above
+  ###
   @capturePasscodeHappyPath
   Scenario: Capture Passcode - Happy Path
     And I set request header content type as JSON
-    And I set path parameter "email" with value "Sprint2Demo@hymnai.com"
-    And I set query parameter "onboardingToken" with value "akxjyh1pjs2ss0u9hsopdqnvqibp70z9kdecko0avsnvtrvezkqdfj1i6epshjyp5xu949zi2ysyki0igefcvqony6dvcbuirgwzkbgo1pgbw1ok1ci4vfkgoh7jmbqf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlMmRhNmQ4OC1jNzU3LTRhMGQtODhiYi05MzE4NThiNDNmOTkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMjM2MjYsImV4cCI6MTU4Nzk5OTYyNn0.Xm8qZHEXYLFs34H7R4UT2r4Q_ohU2oOQpLjjSGq2sOaWc6gNl86jde9KJbPPBOv3kRhERwsJdupsaZze21ygcQ"
     And I set request body with information given in the following table
       | passcode | 123456 |
-    When I POST request to "/v1/customers/{email}/passcode"
+    When I POST request to "/v1/customers/passcode"
     Then response status code should be 200
     And response body should contain value of "ACTIVE" for key "status"

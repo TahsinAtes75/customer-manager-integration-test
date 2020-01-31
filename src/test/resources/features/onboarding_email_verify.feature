@@ -1,64 +1,43 @@
 Feature: Customer Onboarding - Verify Email Notification Token
 
   Background:
-    Given I set REST API url as "https://customer-manager.test.heymanai.com"
+    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
 
   @verifyEmailStatus401
-  Scenario: Verify Email - Email and Token not match
-    And I set path parameter "email" with value "dccd@fvfvf.com"
-    And I set query parameter "token" with value "trashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTokentrashTok"
-    When I POST request to "/v1/customers/{email}/verify"
+  Scenario Outline: Verify Email - Verification Token validation
+    And I set header "authorization" parameter with value "<tokenValue>"
+    When I POST request to "/v1/customers/verify"
     Then response status code should be 401
-    And response body should contain value of "65002" for key "code"
-    And response body should contain value of "Could not verify" for key "message"
+    And response body should contain value of "67555" for key "code"
+    And response body should contain value of "Access token is invalid" for key "message"
+
+    Examples:
+    | tokenValue  |
+    |             |
+    | asd         |
+    | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
+    | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
 
 
-  # Manually update the verification expiry date for the given email and verification token
+
+  #### Verification token for customer: v_token_expired@hymnai.com
+  #### Expiry date: 2020-01-28 14:15:17
   @verifyEmailStatus401
-  Scenario: Verify Email - Verification code expired
-    And I set path parameter "email" with value "sample1@mobqa.com"
-    And I set query parameter "token" with value "wtqtiaegrowngx467ufdakkriivcdoz0ese3z512cd7f8rlobqpf1nemwnd0m9dply2offg9zj4mcdnn0f4i3tm1zoax0x3wygfmk4fopbfd7d9h5ga7peakwhgbj0q4"
-    When I POST request to "/v1/customers/{email}/verify"
+  Scenario: Verify Email - Access token is expired
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.Ows9YYLHXKSB2fIYeGC8NO_rqeFzu5bN6JBZgn4NTmcMeYkudtQ4dUk4NBQWIyX2p5aTf_ExhRcuxDyoh3s0nw"
+    When I POST request to "/v1/customers/verify"
     Then response status code should be 401
-    And response body should contain value of "65002" for key "code"
-    And response body should contain value of "Could not verify" for key "message"
+    And response body should contain value of "67555" for key "code"
+    And response body should contain value of "Access token is invalid" for key "message"
 
 
+  # Customer's status is ADDRESS_CAPTURED
   @verifyEmailStatus400
-  Scenario Outline: Verify Email - Verification Token Validation Test
-    And I set path parameter "email" with value "asd@asd.com"
-    And I set query parameter "token" with value "<tokenValue>"
-    When I POST request to "/v1/customers/{email}/verify"
+  Scenario: Verify Email - Status is incompatible
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJjZDM5M2IyYS1mMTNmLTRhMGItOWMyNi1hYWFiNzg1N2RiMGIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDE0MzIyOCwiZXhwIjoxODk1OTgyNjQyfQ.bFRWPO11SUdBJ-e_V_DbmbDTMVK8qu59qjiW-OmMtUnLSDMm3z29tm1zkN7305ewDR9U-iLjj_Ki4emU3b6G4g"
+    When I POST request to "/v1/customers/verify"
     Then response status code should be 400
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
-
-    Examples:
-      | tokenValue                                                                                                                        | fieldName | message            |
-      |                                                                                                                                   | token     | length must be 128 |
-      | asd                                                                                                                               | token     | length must be 128 |
-      | asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsfs | token     | length must be 128 |
+    And response body should contain value of "65009" for key "code"
+    And response body should contain value of "The customer state is incompatible" for key "message"
 
 
-  @verifyEmailStatus400
-  Scenario Outline: Verify Email - Email Validation Test
-    And I set path parameter "email" with value "<emailValue>"
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
-    When I POST request to "/v1/customers/{email}/verify"
-    Then response status code should be 400
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
-
-    Examples:
-      | emailValue                                          | fieldName | message                             |
-      | sdfhghg                                             | email     | must be a well-formed email address |
-      | a@b.c                                               | email     | size must be between 6 and 50       |
-      | fsfkhsjfkhsjadfsdfsfkhsjfkhssdfsfkfkhsj@bfsfsdf.com | email     | size must be between 6 and 50       |
-
-
-  @verifyEmailStatus404
-  Scenario: Verify Email - Empty Email Validation Test
-    And I set path parameter "email" with value ""
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
-    When I POST request to "/v1/customers/{email}/verify"
-    Then response status code should be 500

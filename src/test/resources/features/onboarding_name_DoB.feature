@@ -1,68 +1,42 @@
 Feature: Customer Onboarding - Capture Customer Name and Date of Birth
 
   Background:
-    Given I set REST API url as "https://customer-manager.test.heymanai.com"
+    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
     And I set request header content type as JSON
 
 
-  @putNameAndDoBStatus400
-  Scenario Outline: Put Name and DoB - Email Validation Test
-    And I set path parameter "email" with value "<emailValue>"
-    And I set query parameter "token" with value "e1alfzfju87hzvjvb0svigjgg7ijslt2vbab6yzxs1nxrghzs06dke93hdxwssvgqp9yrqves4yitww5iz6mhavfp9fwnjmticuvdsctjao14brvhhb9z3urdpdvfslu"
+  @putNameAndDoBStatus401
+  Scenario Outline: Put Name and DoB - Onboarding token validation
+    And I set header "authorization" parameter with value "<tokenValue>"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |
       | dateOfBirth | 1980-01-01      |
-    When I PUT request to "/v1/customers/{email}/profile"
-    Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    When I PUT request to "/v1/customers/profile"
+    Then response status code should be 401
+    And response body should contain value of "67555" for key "code"
+    And response body should contain value of "Access token is invalid" for key "message"
 
     Examples:
-      | emailValue                                          | fieldName | message                             |
-      | sdfhghg                                             | email     | must be a well-formed email address |
-      | a@b.c                                               | email     | size must be between 6 and 50       |
-      | fsfkhsjfkhsjadfsdfsfkhsjfkhssdfsfkfkhsj@bfsfsdf.com | email     | size must be between 6 and 50       |
+      | tokenValue                                                                                                                                                                                                                                                                          |
+      |                                                                                                                                                                                                                                                                                     |
+      | asd                                                                                                                                                                                                                                                                                 |
+      | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
+      | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
 
 
-  @putNameAndDoBStatus500
-  Scenario: Put Name and DoB - Empty Email Validation Test
-    And I set path parameter "email" with value ""
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
-    When I PUT request to "/v1/customers/{email}/profile"
-    Then response status code should be 500
 
-
-  @putNameAndDoBStatus400
-  Scenario Outline: Put Name and DoB - Token Validation Test
-    And I set path parameter "email" with value "asdf@fgh.com"
-    And I set query parameter "token" with value "<tokenValue>"
-    And I set request body with information given in the following table
-      | givenNames  | Name Name       |
-      | surname     | Surname Surname |
-      | dateOfBirth | 1980-11-15      |
-    When I PUT request to "/v1/customers/{email}/profile"
-    Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
-
-    Examples:
-      | tokenValue                                                                                                                        | fieldName | message            |
-      |                                                                                                                                   | token     | length must be 128 |
-      | asd                                                                                                                               | token     | length must be 128 |
-      | asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsfs | token     | length must be 128 |
-
+  #####
+  ##### Manually get the onboarding token value from "/v1/tokens/customer/onboarding" API
+  #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Given Names Validation Test
-    And I set path parameter "email" with value "asdf@fgh.com"
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | <givenNamesValue> |
       | surname     | Surname Surname   |
       | dateOfBirth | 1980-11-15        |
-    When I PUT request to "/v1/customers/{email}/profile"
+    When I PUT request to "/v1/customers/profile"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -74,15 +48,17 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | as123asdsdwewe123as d123assdasd123 asd1asdsdfsfsfsr | givenNames | size must be between 1 and 50 |
 
 
+  #####
+  ##### Manually get the onboarding token value from "/v1/tokens/customer/onboarding" API
+  #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Surname Validation Test
-    And I set path parameter "email" with value "asdf@fgh.com"
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | Name Name      |
       | surname     | <surnameValue> |
       | dateOfBirth | 1980-11-15     |
-    When I PUT request to "/v1/customers/{email}/profile"
+    When I PUT request to "/v1/customers/profile"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -94,15 +70,17 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | as123asdsdwewe123as d123assdasd123 asd1asdsdfsfsfsr | surname   | size must be between 1 and 50 |
 
 
+  #####
+  ##### Manually get the onboarding token value from "/v1/tokens/customer/onboarding" API
+  #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Date of Birth Validation Test
-    And I set path parameter "email" with value "asdf@fgh.com"
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |
       | dateOfBirth | <DoBValue>      |
-    When I PUT request to "/v1/customers/{email}/profile"
+    When I PUT request to "/v1/customers/profile"
     Then response status code should be 400
     And response body should contain value of "65004" for key "code"
     And response body should contain value of "Http Message Not Readable" for key "message"
@@ -122,15 +100,18 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | 1983-04-31  |
 
 
+
+  #####
+  ##### Manually get the onboarding token value from "/v1/tokens/customer/onboarding" API
+  #####
   @putNameAndDoBStatus400
   Scenario Outline: Put Name and DoB - Date of Birth Rules Test
-    And I set path parameter "email" with value "asdf@fgh.com"
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2QyMjc2NC04MjcwLTQ0NTgtYmNjMC03NzVmYmNkYWU2YzIiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1Nzk3Nzg0NDYsImV4cCI6MTg5NTk4MjY0Mn0.l6QRLkT-1lsEAHUoIR-71cNOVxpik_Jspbi3BLd-otu3IxXEaYpxUUV3XnAuVZEKheTQu0D-29ann3i0H4eFOw"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |
       | dateOfBirth | <DoBValue>      |
-    When I PUT request to "/v1/customers/{email}/profile"
+    When I PUT request to "/v1/customers/profile"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
     And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
@@ -144,17 +125,17 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | 2010-01-01 | dateOfBirth | Age must be 18 years old or older    |
 
 
-  @putNameAndDoBStatus401
-  Scenario: Put Name and DoB - Email and Token not match
-    And I set path parameter "email" with value "sample1@trial.com"
-    And I set query parameter "token" with value "asd123asd123asd123asd123asd123asd123asd123asd123asdasd123asd123asd123asd123asd123asd123asd123asd123asdasd123asdfsdfsdfsfsfsfsfsf"
+
+  # Customer's status is EMAIL_CAPTURED
+  # Onboarding token has been taken without verifying the email
+  @putNameAndDoBStatus400
+  Scenario: Put Name and DoB - Email is not verified
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTg5NTk4MjY0Mn0.5gPffCdd9zLKl-hhjQApIbdkhsw_vR_Mz_w5W728qzEHZb1LsipB1Wc5h6Irdk-FZAKMQrviObC7Q6wsSFe74A"
     And I set request body with information given in the following table
       | givenNames  | Name Name       |
       | surname     | Surname Surname |
-      | dateOfBirth | 1980-11-15      |
-    When I PUT request to "/v1/customers/{email}/profile"
-    Then response status code should be 401
-    And response body should contain value of "65002" for key "code"
-    And response body should contain value of "Could not verify" for key "message"
-
-
+      | dateOfBirth | 1980-01-01      |
+    When I PUT request to "/v1/customers/profile"
+    Then response status code should be 400
+    And response body should contain value of "65009" for key "code"
+    And response body should contain value of "The customer state is incompatible" for key "message"
