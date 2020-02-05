@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Verify Customer Phone Number
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
 
 
   @verifyPhoneNumberStatus401
@@ -86,9 +86,9 @@ Feature: Customer Onboarding - Verify Customer Phone Number
   #####
   @verifyPhoneNumberStatus401
   Scenario: Verify Phone Number - SMS Code Expired
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
-    And I set query parameter "phone" with value "443333333333"
-    And I set query parameter "code" with value "045983"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5ZjU2NDc3Ny04OGQ1LTRhYjUtYmQ3Yi1hMzk1YzE5MzA1NGMiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MTQxMTIsImV4cCI6MTg5NjUyMDMzNH0.kQoUVn6gbPlNZin8bxySzqodui1wydUbQXENNrLc3GaHMC_GHIwD-fIZDgYIh0cGyEpDaKS0r77_OLYr7NE49Q"
+    And I set query parameter "phone" with value "444444444444"
+    And I set query parameter "code" with value "726306"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 401
     And response body should contain value of "65012" for key "code"

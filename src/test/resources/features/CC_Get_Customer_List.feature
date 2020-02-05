@@ -1,7 +1,7 @@
 Feature: Contact Center - Get Customer List
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
 
 
   @getCustomerListStatus401
@@ -121,6 +121,7 @@ Feature: Contact Center - Get Customer List
     And response body should contain value of 0 for key "totalPages"
 
 
+  # Agent logs in. Call this API with the access token
   @getCustomerList
   Scenario: Get Customer List - Data Found
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
@@ -135,10 +136,10 @@ Feature: Contact Center - Get Customer List
         {
           "email": "onb_happy_path_1@hymnai.com",
           "fullName": "Ebru Soysal",
-          "accountNumber": "10000070",
-          "phoneNumber": "442222222222",
+          "accountNumber": "10001530",
+          "phoneNumber": "449999999999",
           "status": "ACTIVE",
-          "key": "f0635219-d5d4-4f27-a941-1df192bffe3f"
+          "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
         }
       ]
     }

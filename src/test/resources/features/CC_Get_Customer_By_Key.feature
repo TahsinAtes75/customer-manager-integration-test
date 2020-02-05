@@ -1,24 +1,24 @@
 Feature: Contact Center - Get Customer By Key
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
 
 
   @getCustomerByKey
   Scenario: Get Customer By Key - Happy Path
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set header "key" parameter with value "e2da6d88-c757-4a0d-88bb-931858b43f99"
+    And I set header "key" parameter with value "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
     When I GET request to "/v1/customer/agent"
     Then response status code should be 200
     And response body should be following json
   """
     {
-      "email": "onb_happy_path_2@hymnai.com",
+      "email": "onb_happy_path_1@hymnai.com",
       "fullName": "Ebru Soysal",
-      "accountNumber": "10000089",
+      "accountNumber": "10001530",
       "phoneNumber": "449999999999",
       "status": "ACTIVE",
-      "key": "e2da6d88-c757-4a0d-88bb-931858b43f99"
+      "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
     }
   """
 

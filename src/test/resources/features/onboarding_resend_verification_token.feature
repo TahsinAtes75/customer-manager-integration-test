@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Resend Verification Token
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
 
   ###################################
   ### Resend Verification Token only works for if customer's status is either "EMAIL_CAPTURED" OR "EMAIL_VERIFIED"

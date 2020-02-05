@@ -1,7 +1,7 @@
 Feature: Contact Center - Customer Search
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
 
 
   @getCustomerInfoStatus401
@@ -20,9 +20,10 @@ Feature: Contact Center - Customer Search
 
 
 
+  # Customer logs in. Then customer calls this API with access token
   @getCustomerInfo
   Scenario: Get Customer Info - Happy Path
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJmMDYzNTIxOS1kNWQ0LTRmMjctYTk0MS0xZGYxOTJiZmZlM2YiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTgwNDA2NDI2LCJleHAiOjE4OTU5ODI2NDJ9.Kh0pdljjYkGsVccBKz3Bdb5I1jCh0ZJwaBw-eek9XLTTQhqVO9dNekneSp2rP17LSJxIi3eynLZIL8avIpQrtQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4Nzg4OWZlOC1iMWQyLTQ2ODUtYWFhNi1kNjdmOWMzYTY2OTciLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTgwOTE2MzkwLCJleHAiOjE4OTY1MjAzMzR9.vE7c2J1gsuAyv4bsP5H9VyIuFRU0xHjJqkabZkYroikFYfDhLt6mpn7f4UjeM_I-nxJYLGPya-sJxR0bB19IKw"
     When I GET request to "/v1/customer"
     Then response status code should be 200
     And response body should be following json
@@ -30,10 +31,10 @@ Feature: Contact Center - Customer Search
     {
       "email": "onb_happy_path_1@hymnai.com",
       "fullName": "Ebru Soysal",
-      "accountNumber": "10000070",
-      "phoneNumber": "442222222222",
+      "accountNumber": "10001530",
+      "phoneNumber": "449999999999",
       "status": "ACTIVE",
-      "key": "f0635219-d5d4-4f27-a941-1df192bffe3f"
+      "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
     }
   """
 
