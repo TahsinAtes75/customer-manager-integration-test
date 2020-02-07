@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Capture Customer Address
 
   Background:
-    Given I set REST API url as "https://customer-manager.dev.heymanai.com"
+    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
     And I set request header content type as JSON
 
 
@@ -118,7 +118,7 @@ Feature: Customer Onboarding - Capture Customer Address
   # Onboarding token has been taken without verifying the email
   @captureAddressStatus400
   Scenario: Put Name and DoB - Email is not verified
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTg5NTk4MjY0Mn0.5gPffCdd9zLKl-hhjQApIbdkhsw_vR_Mz_w5W728qzEHZb1LsipB1Wc5h6Irdk-FZAKMQrviObC7Q6wsSFe74A"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwMTMxNGI4Ny0zMjg4LTQ3OTEtODRhMy01YTIwOTI3NDkyMzciLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MDMyNjYsImV4cCI6MTg5NjUyMDMzNH0.3juQubov5S3hfeTGDgzRxmkto6a27s6txZ3uCEo0c2d5UwPkHTP31pm28ddKELid1u8yoFCB4W7NKAY19wIqRw"
     And I set request body with information given in the following table
       | country  | UK                |
       | line1    | 40 Caversham Road |
