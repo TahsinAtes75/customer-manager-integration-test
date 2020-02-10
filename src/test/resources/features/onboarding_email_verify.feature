@@ -39,6 +39,6 @@ Feature: Customer Onboarding - Verify Email Notification Token
     When I POST request to "/v1/customers/verify"
     Then response status code should be 400
     And response body should contain value of "65009" for key "code"
-    And response body should contain value of "The customer state is incompatible" for key "message"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "message"
 
 

@@ -17,7 +17,7 @@ Feature: Contact Center - Get Customer By Key
       "fullName": "Ebru Soysal",
       "accountNumber": "10001530",
       "phoneNumber": "449999999999",
-      "status": "ACTIVE",
+      "onboardingStatus": "REGISTRATION_COMPLETE",
       "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
     }
   """

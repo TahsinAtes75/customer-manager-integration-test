@@ -70,7 +70,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
 
   ###########################
   # Customer: onb_resend_sms@hymnai.com
-  # Customer's status is "TELEPHONE_CAPTURED"
+  # Onboarding status is "TELEPHONE_CAPTURED"
   # Manually get the Onboarding token from API
   ###########################
   @resendSmsCodeStatus200
@@ -85,15 +85,15 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   {
     "email": "onb_resend_sms@hymnai.com",
     "phone": "442222222222",
-    "status": "TELEPHONE_CAPTURED"
+    "onboardingStatus": "TELEPHONE_CAPTURED"
   }
   """
 
 
   ###########################
   # Customer: onb_address_captured@hymnai.com
-  # Customer's status is other than "TELEPHONE_CAPTURED" or "NAME_DOB_CAPTURED"
-  # Customer's status is "ADDRESS_CAPTURED"
+  # Onboarding status is other than "TELEPHONE_CAPTURED" or "NAME_DOB_CAPTURED"
+  # Onboarding status is "ADDRESS_CAPTURED"
   # Manually get the Onboarding token from API
   ###########################
   @resendSmsCodeStatus400
@@ -104,5 +104,5 @@ Feature: Customer Onboarding - Capture Customer Phone Number
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 400
     And response body should contain value of "65009" for key "code"
-    And response body should contain value of "The customer state is incompatible" for key "message"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "message"
 
