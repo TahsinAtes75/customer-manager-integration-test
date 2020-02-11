@@ -46,7 +46,7 @@ Feature: Customer Onboarding - Capture Customer Passcode
 
 
 
-  # Customer's status is EMAIL_CAPTURED
+  # Onboarding status is EMAIL_CAPTURED
   # Customer: onb_email_captured@hymnai.com
   # Onboarding token has been taken without verifying the email
   @capturePasscodeStatus400
@@ -57,4 +57,4 @@ Feature: Customer Onboarding - Capture Customer Passcode
     When I POST request to "/v1/customers/passcode"
     Then response status code should be 400
     And response body should contain value of "65009" for key "code"
-    And response body should contain value of "The customer state is incompatible" for key "message"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "message"

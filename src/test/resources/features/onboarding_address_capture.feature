@@ -113,7 +113,7 @@ Feature: Customer Onboarding - Capture Customer Address
       | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | town      | size must be between 1 and 50 |
 
 
-  # Customer's status is EMAIL_CAPTURED
+  # Onboarding status is EMAIL_CAPTURED
   # Customer: onb_email_captured@hymnai.com
   # Onboarding token has been taken without verifying the email
   @captureAddressStatus400
@@ -128,4 +128,4 @@ Feature: Customer Onboarding - Capture Customer Address
     When I POST request to "/v1/customers/addresses"
     Then response status code should be 400
     And response body should contain value of "65009" for key "code"
-    And response body should contain value of "The customer state is incompatible" for key "message"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "message"
