@@ -61,7 +61,6 @@ Feature: Contact Center - Get Customer List
       | qwertyuiopasdfghjklqwertyuioqwasqwertyui2opssdfsdfs | sortBy | size must be between 1 and 50 |
 
 
-  # Ask Kemal about this case. Is there a need to test this field's validation rules. 6-12 number is not logical anyways
   @getCustomerListStatus400
   Scenario Outline: Get Customer List - phoneNumber Validation
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
@@ -73,11 +72,24 @@ Feature: Contact Center - Get Customer List
     And response body should contain value of "<message>" for key "validationErrors[0].message"
 
     Examples:
-      | phoneNumberValue | field       | message                       |
-      |                  | phoneNumber | size must be between 6 and 12 |
-      | 12345            | phoneNumber | size must be between 6 and 12 |
-      | 1234567890234    | phoneNumber | size must be between 6 and 12 |
-      | asdfg            | phoneNumber | size must be between 6 and 12 |
+      | phoneNumberValue | field       | message              |
+      | 12345            | phoneNumber | Invalid phone number |
+      | 1234567890234    | phoneNumber | Invalid phone number |
+      | 111111111111     | phoneNumber | Invalid phone number |
+      | asdfg            | phoneNumber | Invalid phone number |
+
+
+
+  @getCustomerListStatus400
+  Scenario: Get Customer List - Space Character for phoneNumber
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set query parameter "phoneNumber" with value "  "
+    When I GET request to "/v1/customers"
+    Then response status code should be 400
+    And response body should contain value of "65000" for key "code"
+    And response body should contain value of "phoneNumber" for key "validationErrors[0].field"
+    And response body should contain value of "Invalid phone number" for key "validationErrors[0].message"
+
 
 
   @getCustomerListStatus400
@@ -138,7 +150,7 @@ Feature: Contact Center - Get Customer List
           "fullName": "Ebru Soysal",
           "accountNumber": "10001530",
           "phoneNumber": "449999999999",
-          "status": "ACTIVE",
+          "onboardingStatus": "REGISTRATION_COMPLETE",
           "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
         }
       ]
