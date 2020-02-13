@@ -85,7 +85,8 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   {
     "email": "onb_resend_sms@hymnai.com",
     "phone": "442222222222",
-    "onboardingStatus": "TELEPHONE_CAPTURED"
+    "onboardingStatus": "TELEPHONE_CAPTURED",
+    "customerStatus": "PROSPECT"
   }
   """
 
