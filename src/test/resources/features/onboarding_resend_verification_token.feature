@@ -19,6 +19,7 @@ Feature: Customer Onboarding - Resend Verification Token
     Then response status code should be 200
     And response body should contain value of "onb_resend_token1@hymnai.com" for key "email"
     And response body should contain value of "EMAIL_CAPTURED" for key "onboardingStatus"
+    And response body should contain value of "PROSPECT" for key "customerStatus"
     And response body should contain the key "key" with a not-null value
 
 
@@ -36,6 +37,7 @@ Feature: Customer Onboarding - Resend Verification Token
     Then response status code should be 200
     And response body should contain value of "onb_resend_token2@hymnai.com" for key "email"
     And response body should contain value of "EMAIL_CAPTURED" for key "onboardingStatus"
+    And response body should contain value of "PROSPECT" for key "customerStatus"
     And response body should contain the key "key" with a not-null value
 
 

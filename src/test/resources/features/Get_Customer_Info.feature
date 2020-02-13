@@ -34,7 +34,8 @@ Feature: Contact Center - Customer Search
       "accountNumber": "10001530",
       "phoneNumber": "449999999999",
       "onboardingStatus": "REGISTRATION_COMPLETE",
-      "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697"
+      "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697",
+      "customerStatus": "ACTIVE"
     }
   """
 
