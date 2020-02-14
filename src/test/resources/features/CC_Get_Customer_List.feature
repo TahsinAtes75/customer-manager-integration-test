@@ -159,3 +159,54 @@ Feature: Contact Center - Get Customer List
     """
 
 
+
+# Agent logs in. Call this API with the access token
+  @getCustomerList
+  Scenario: Get Customer List - fullName Like Search
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set query parameter "fullName" with value "unique"
+    When I GET request to "/v1/customers"
+    Then response status code should be 200
+    And response body should be following json
+    """
+    {
+      "totalPages": 1,
+      "contents": [
+        {
+          "email": "onb_name_DoB@hymnai.com",
+          "fullName": "Unique Customer",
+          "accountNumber": "",
+          "onboardingStatus": "NAME_DOB_CAPTURED",
+          "key": "fdc66c53-23c6-4804-9a9e-e85db5ddc679",
+          "customerStatus": "PROSPECT"
+        }
+      ]
+    }
+    """
+
+
+  # Agent logs in. Call this API with the access token
+  @getCustomerList
+  Scenario: Get Customer List - fullName Search
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set query parameter "fullName" with value "Ebru1 Soysal"
+    When I GET request to "/v1/customers"
+    Then response status code should be 200
+    And response body should be following json
+    """
+    {
+      "totalPages": 1,
+      "contents": [
+        {
+          "email": "soysalsoysal@hymnai.com",
+          "fullName": "Ebru1 Soysal",
+          "accountNumber": "10001867",
+          "phoneNumber": "441231231231",
+          "onboardingStatus": "REGISTRATION_COMPLETE",
+          "key": "377c7431-3a43-45d6-a99d-6e77dc2093e9",
+          "customerStatus": "ACTIVE"
+        }
+      ]
+    }
+    """
+
