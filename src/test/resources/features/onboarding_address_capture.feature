@@ -10,6 +10,7 @@ Feature: Customer Onboarding - Capture Customer Address
     And I set header "authorization" parameter with value "<tokenValue>"
     And I set request body with information given in the following table
       | country  | UK                |
+      | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    |                   |
       | postCode | RG1 7EB           |
@@ -27,12 +28,12 @@ Feature: Customer Onboarding - Capture Customer Address
       | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
 
 
-
   @captureAddressStatus400
   Scenario Outline: Capture Address - Country Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
       | country  | <countryValue>    |
+      | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    |                   |
       | postCode | RG1 7EB           |
@@ -50,12 +51,35 @@ Feature: Customer Onboarding - Capture Customer Address
 
 
   @captureAddressStatus400
+  Scenario Outline: Capture Address - County Validation Test
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
+    And I set request body with information given in the following table
+      | country  | UK                |
+      | county   | <countyValue>     |
+      | line1    | 40 Caversham Road |
+      | line2    |                   |
+      | postCode | RG1 7EB           |
+      | town     | Reading           |
+    When I POST request to "/v1/customers/addresses"
+    Then response status code should be 400
+    And response body should contain value of "65000" for key "code"
+    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
+    And response body should contain value of "<message>" for key "validationErrors[0].message"
+
+    Examples:
+      | countyValue                                         | fieldName | message                       |
+      |                                                     | county    | size must be between 1 and 50 |
+      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | county    | size must be between 1 and 50 |
+
+
+  @captureAddressStatus400
   Scenario Outline: Capture Address - Line1 Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
       | country  | UK           |
+      | county   | Berkshire    |
       | line1    | <line1Value> |
-      | line2    |              |
+      | line2    | line2        |
       | postCode | RG1 7EB      |
       | town     | Reading      |
     When I POST request to "/v1/customers/addresses"
@@ -70,12 +94,33 @@ Feature: Customer Onboarding - Capture Customer Address
       | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | line1     | size must be between 1 and 50 |
 
 
+  @captureAddressStatus400
+  Scenario Outline: Capture Address - Line2 Validation Test
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
+    And I set request body with information given in the following table
+      | country  | UK           |
+      | county   | Berkshire    |
+      | line1    | line1        |
+      | line2    | <line2Value> |
+      | postCode | RG1 7EB      |
+      | town     | Reading      |
+    When I POST request to "/v1/customers/addresses"
+    Then response status code should be 400
+    And response body should contain value of "65000" for key "code"
+    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
+    And response body should contain value of "<message>" for key "validationErrors[0].message"
+
+    Examples:
+      | line2Value                                          | fieldName | message                       |
+      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | line2     | size must be between 0 and 50 |
+
 
   @captureAddressStatus400
   Scenario Outline: Capture Address - PostCode Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
       | country  | UK                |
+      | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
       | postCode | <postCodeValue>   |
@@ -97,6 +142,7 @@ Feature: Customer Onboarding - Capture Customer Address
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
       | country  | UK                |
+      | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
       | postCode | RG1 7EB           |
@@ -121,10 +167,11 @@ Feature: Customer Onboarding - Capture Customer Address
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwMTMxNGI4Ny0zMjg4LTQ3OTEtODRhMy01YTIwOTI3NDkyMzciLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MDMyNjYsImV4cCI6MTg5NjUyMDMzNH0.3juQubov5S3hfeTGDgzRxmkto6a27s6txZ3uCEo0c2d5UwPkHTP31pm28ddKELid1u8yoFCB4W7NKAY19wIqRw"
     And I set request body with information given in the following table
       | country  | UK                |
+      | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
       | postCode | RG1 7EB           |
-      | town     | <townValue>       |
+      | town     | Reading           |
     When I POST request to "/v1/customers/addresses"
     Then response status code should be 400
     And response body should contain value of "65009" for key "code"

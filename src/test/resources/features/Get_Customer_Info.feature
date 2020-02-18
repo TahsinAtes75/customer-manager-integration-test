@@ -29,13 +29,26 @@ Feature: Contact Center - Customer Search
     And response body should be following json
   """
     {
-      "email": "onb_happy_path_1@hymnai.com",
-      "fullName": "Ebru Soysal",
-      "accountNumber": "10001530",
-      "phoneNumber": "449999999999",
-      "onboardingStatus": "REGISTRATION_COMPLETE",
       "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697",
-      "customerStatus": "ACTIVE"
+      "email": "onb_happy_path_1@hymnai.com",
+      "emailVerified": true,
+      "phoneNumber": "449999999999",
+      "phoneVerified": true,
+      "givenNames": "Ebru",
+      "surname": "Soysal",
+      "fullName": "Ebru Soysal",
+      "dateOfBirth": "1982-01-01",
+      "onboardingStatus": "REGISTRATION_COMPLETE",
+      "customerStatus": "ACTIVE",
+      "address": {
+        "line1": "3 Queen's Road",
+        "line2": "",
+        "town": "Reading",
+        "county": "Berkshire 123",
+        "country": "UK",
+        "postCode": "RG1 4AP",
+        "verified": false
+      }
     }
   """
 
