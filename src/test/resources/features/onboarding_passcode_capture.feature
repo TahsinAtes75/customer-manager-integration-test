@@ -12,8 +12,8 @@ Feature: Customer Onboarding - Capture Customer Passcode
       | phone | 447234567890 |
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                          |
@@ -50,11 +50,11 @@ Feature: Customer Onboarding - Capture Customer Passcode
   # Customer: onb_email_captured@hymnai.com
   # Onboarding token has been taken without verifying the email
   @capturePasscodeStatus400
-  Scenario: Put Name and DoB - Email is not verified
+  Scenario: Customer Passcode - Customer status
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwMTMxNGI4Ny0zMjg4LTQ3OTEtODRhMy01YTIwOTI3NDkyMzciLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MDMyNjYsImV4cCI6MTg5NjUyMDMzNH0.3juQubov5S3hfeTGDgzRxmkto6a27s6txZ3uCEo0c2d5UwPkHTP31pm28ddKELid1u8yoFCB4W7NKAY19wIqRw"
     And I set request body with information given in the following table
       | passcode | 123456 |
     When I POST request to "/v1/customers/passcode"
     Then response status code should be 400
-    And response body should contain value of "65009" for key "code"
-    And response body should contain value of "Customer onboarding state is incompatible" for key "message"
+    And response body should contain value of "65009" for key "errors[0].code"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "errors[0].description"

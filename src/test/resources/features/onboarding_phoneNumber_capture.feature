@@ -12,8 +12,8 @@ Feature: Customer Onboarding - Capture Customer Phone Number
       | phone | 447234567890 |
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                          |
@@ -52,8 +52,8 @@ Feature: Customer Onboarding - Capture Customer Phone Number
       | phone | 447000111101 |
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 409
-    And response body should contain value of "65010" for key "code"
-    And response body should contain value of "Phone already exists" for key "message"
+    And response body should contain value of "65010" for key "errors[0].code"
+    And response body should contain value of "Phone already exists" for key "errors[0].description"
 
 
   @putPhoneNumberStatus404
@@ -63,8 +63,8 @@ Feature: Customer Onboarding - Capture Customer Phone Number
       | phone | 441111111111 |
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 404
-    And response body should contain value of "65011" for key "code"
-    And response body should contain value of "Customer not found with key: 93d22764-8270-4458-bcc0-775fbcdae6c2" for key "message"
+    And response body should contain value of "65011" for key "errors[0].code"
+    And response body should contain value of "Customer not found with key: 93d22764-8270-4458-bcc0-775fbcdae6c2" for key "errors[0].description"
 
 
 
@@ -104,6 +104,6 @@ Feature: Customer Onboarding - Capture Customer Phone Number
       | phone | 443333333332 |
     When I PUT request to "/v1/customers/phone"
     Then response status code should be 400
-    And response body should contain value of "65009" for key "code"
-    And response body should contain value of "Customer onboarding state is incompatible" for key "message"
+    And response body should contain value of "65009" for key "errors[0].code"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "errors[0].description"
 

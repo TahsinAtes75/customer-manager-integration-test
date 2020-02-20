@@ -9,8 +9,8 @@ Feature: Contact Center - Customer Search
     And I set header "authorization" parameter with value "<tokenValue>"
     When I GET request to "/v1/customer"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                         |

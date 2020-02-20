@@ -14,8 +14,8 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | dateOfBirth | 1980-01-01      |
     When I PUT request to "/v1/customers/profile"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                          |
@@ -82,8 +82,8 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | dateOfBirth | <DoBValue>      |
     When I PUT request to "/v1/customers/profile"
     Then response status code should be 400
-    And response body should contain value of "65004" for key "code"
-    And response body should contain value of "Http Message Not Readable" for key "message"
+    And response body should contain value of "65004" for key "errors[0].code"
+    And response body should contain value of "Http Message Not Readable" for key "errors[0].description"
 
     Examples:
       | DoBValue    |
@@ -138,5 +138,5 @@ Feature: Customer Onboarding - Capture Customer Name and Date of Birth
       | dateOfBirth | 1980-01-01      |
     When I PUT request to "/v1/customers/profile"
     Then response status code should be 400
-    And response body should contain value of "65009" for key "code"
-    And response body should contain value of "Customer onboarding state is incompatible" for key "message"
+    And response body should contain value of "65009" for key "errors[0].code"
+    And response body should contain value of "Customer onboarding state is incompatible" for key "errors[0].description"
