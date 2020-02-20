@@ -122,8 +122,8 @@ Feature: Contact Center - Get Customer By Key
     And I set header "key" parameter with value "e2da6d88-c757-4a0d-88bb-931858b43f99"
     When I GET request to "/v1/customer/agent"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                          |
@@ -138,9 +138,9 @@ Feature: Contact Center - Get Customer By Key
     And I set header "key" parameter with value "<keyValue>"
     When I GET request to "/v1/customer/agent"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "key" for key "validationErrors[0].field"
-    And response body should contain value of "length must be 36" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "key" for key "errors[0].field"
+    And response body should contain value of "length must be 36" for key "errors[0].description"
 
     Examples:
       | keyValue                              |
@@ -156,8 +156,8 @@ Feature: Contact Center - Get Customer By Key
     And I set header "key" parameter with value "<keyValue>"
     When I GET request to "/v1/customer/agent"
     Then response status code should be 404
-    And response body should contain value of "65011" for key "code"
-    And response body should contain value of "Customer not found with key: <keyValue>" for key "message"
+    And response body should contain value of "65011" for key "errors[0].code"
+    And response body should contain value of "Customer not found with key: <keyValue>" for key "errors[0].description"
 
     Examples:
       | keyValue                             |

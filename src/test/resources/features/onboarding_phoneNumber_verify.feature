@@ -11,8 +11,8 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     And I set query parameter "phone" with value "442222222222"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                          |
@@ -29,9 +29,9 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     And I set query parameter "code" with value "<smsValue>"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "code" for key "validationErrors[0].field"
-    And response body should contain value of "length must be 6" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "code" for key "errors[0].field"
+    And response body should contain value of "length must be 6" for key "errors[0].description"
 
     Examples:
       | smsValue |
@@ -48,9 +48,9 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     And I set query parameter "code" with value "584625"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "phone" for key "validationErrors[0].field"
-    And response body should contain value of "Invalid phone number" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "phone" for key "errors[0].field"
+    And response body should contain value of "Invalid phone number" for key "errors[0].description"
 
     Examples:
       | phoneValue    |
@@ -70,8 +70,8 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     And I set query parameter "code" with value "<smsValue>"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 401
-    And response body should contain value of "65002" for key "code"
-    And response body should contain value of "Could not verify" for key "message"
+    And response body should contain value of "65002" for key "errors[0].code"
+    And response body should contain value of "Could not verify" for key "errors[0].description"
 
     Examples:
       | smsValue |
@@ -91,8 +91,8 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     And I set query parameter "code" with value "726306"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 401
-    And response body should contain value of "65012" for key "code"
-    And response body should contain value of "SMS code expired" for key "message"
+    And response body should contain value of "65012" for key "errors[0].code"
+    And response body should contain value of "SMS code expired" for key "errors[0].description"
 
 
 
@@ -103,8 +103,8 @@ Feature: Customer Onboarding - Verify Customer Phone Number
     And I set query parameter "code" with value "<codeValue>"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 401
-    And response body should contain value of "65002" for key "code"
-    And response body should contain value of "Could not verify" for key "message"
+    And response body should contain value of "65002" for key "errors[0].code"
+    And response body should contain value of "Could not verify" for key "errors[0].description"
 
     Examples:
       | phoneValue   | codeValue |

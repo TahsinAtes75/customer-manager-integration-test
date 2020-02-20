@@ -9,8 +9,8 @@ Feature: Contact Center - Get Customer List
     And I set header "authorization" parameter with value "<tokenValue>"
     When I GET request to "/v1/customers"
     Then response status code should be 401
-    And response body should contain value of "67555" for key "code"
-    And response body should contain value of "Access token is invalid" for key "message"
+    And response body should contain value of "67555" for key "errors[0].code"
+    And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
       | tokenValue                                                                                                                                                                                                                                                                         |
@@ -24,8 +24,8 @@ Feature: Contact Center - Get Customer List
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65006" for key "code"
-    And response body should contain value of "No Search Parameter Provided" for key "message"
+    And response body should contain value of "65006" for key "errors[0].code"
+    And response body should contain value of "No Search Parameter Provided" for key "errors[0].description"
 
 
   @getCustomerListStatus400
@@ -34,9 +34,9 @@ Feature: Contact Center - Get Customer List
     And I set query parameter "email" with value "<emailValue>"
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<field>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "<field>" for key "errors[0].field"
+    And response body should contain value of "<message>" for key "errors[0].description"
 
     Examples:
       | emailValue                                          | field | message                             |
@@ -51,9 +51,9 @@ Feature: Contact Center - Get Customer List
     And I set query parameter "sortBy" with value "<sortByValue>"
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<field>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "<field>" for key "errors[0].field"
+    And response body should contain value of "<message>" for key "errors[0].description"
 
     Examples:
       | sortByValue                                         | field  | message                       |
@@ -67,9 +67,9 @@ Feature: Contact Center - Get Customer List
     And I set query parameter "phoneNumber" with value "<phoneNumberValue>"
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<field>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "<field>" for key "errors[0].field"
+    And response body should contain value of "<message>" for key "errors[0].description"
 
     Examples:
       | phoneNumberValue | field       | message              |
@@ -86,9 +86,9 @@ Feature: Contact Center - Get Customer List
     And I set query parameter "phoneNumber" with value "  "
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "phoneNumber" for key "validationErrors[0].field"
-    And response body should contain value of "Invalid phone number" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "phoneNumber" for key "errors[0].field"
+    And response body should contain value of "Invalid phone number" for key "errors[0].description"
 
 
 
@@ -98,9 +98,9 @@ Feature: Contact Center - Get Customer List
     And I set query parameter "fullName" with value "<fullNameValue>"
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<field>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "<field>" for key "errors[0].field"
+    And response body should contain value of "<message>" for key "errors[0].description"
 
     Examples:
       | fullNameValue                                       | field    | message                       |
@@ -114,9 +114,9 @@ Feature: Contact Center - Get Customer List
     And I set query parameter "accountNumber" with value "<accountNumberValue>"
     When I GET request to "/v1/customers"
     Then response status code should be 400
-    And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<field>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "65000" for key "errors[0].code"
+    And response body should contain value of "<field>" for key "errors[0].field"
+    And response body should contain value of "<message>" for key "errors[0].description"
 
     Examples:
       | accountNumberValue                                  | field         | message                       |
