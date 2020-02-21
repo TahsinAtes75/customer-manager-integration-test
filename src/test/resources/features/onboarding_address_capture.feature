@@ -67,9 +67,8 @@ Feature: Customer Onboarding - Capture Customer Address
     And response body should contain value of "<message>" for key "validationErrors[0].message"
 
     Examples:
-      | countyValue                                         | fieldName | message                       |
-      |                                                     | county    | size must be between 1 and 50 |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | county    | size must be between 1 and 50 |
+      | countyValue                          | fieldName | message                       |
+      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkf | county    | size must be between 0 and 35 |
 
 
   @captureAddressStatus400
@@ -89,9 +88,9 @@ Feature: Customer Onboarding - Capture Customer Address
     And response body should contain value of "<message>" for key "validationErrors[0].message"
 
     Examples:
-      | line1Value                                          | fieldName | message                       |
-      |                                                     | line1     | size must be between 1 and 50 |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | line1     | size must be between 1 and 50 |
+      | line1Value                                                                                                                                                                                                                                                       | fieldName | message                        |
+      |                                                                                                                                                                                                                                                                  | line1     | size must be between 1 and 255 |
+      | sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs fsdfsfsfsdf | line1     | size must be between 1 and 255 |
 
 
   @captureAddressStatus400
@@ -111,8 +110,8 @@ Feature: Customer Onboarding - Capture Customer Address
     And response body should contain value of "<message>" for key "validationErrors[0].message"
 
     Examples:
-      | line2Value                                          | fieldName | message                       |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | line2     | size must be between 0 and 50 |
+      | line2Value                                                                                                                                                                                                                                                       | fieldName | message                        |
+      | sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa sfdsfsdfsfsfs fsdfsfsfsdf | line2     | size must be between 0 and 255 |
 
 
   @captureAddressStatus400
@@ -132,9 +131,9 @@ Feature: Customer Onboarding - Capture Customer Address
     And response body should contain value of "<message>" for key "validationErrors[0].message"
 
     Examples:
-      | postCodeValue                                       | fieldName | message                       |
-      |                                                     | postCode  | size must be between 1 and 50 |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | postCode  | size must be between 1 and 50 |
+      | postCodeValue | fieldName | message                      |
+      |               | postCode  | size must be between 1 and 8 |
+      | fsdfsfsfa     | postCode  | size must be between 1 and 8 |
 
 
   @captureAddressStatus400
@@ -154,10 +153,9 @@ Feature: Customer Onboarding - Capture Customer Address
     And response body should contain value of "<message>" for key "validationErrors[0].message"
 
     Examples:
-      | townValue                                           | fieldName | message                       |
-      |                                                     | town      | size must be between 1 and 50 |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | town      | size must be between 1 and 50 |
-
+      | townValue                            | fieldName | message                       |
+      |                                      | town      | size must be between 1 and 35 |
+      | sfsdfsdfsf dfsdfsdfsf sfsfsfadsdsa s | town      | size must be between 1 and 35 |
 
   # Onboarding status is EMAIL_CAPTURED
   # Customer: onb_email_captured@hymnai.com
@@ -167,7 +165,7 @@ Feature: Customer Onboarding - Capture Customer Address
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwMTMxNGI4Ny0zMjg4LTQ3OTEtODRhMy01YTIwOTI3NDkyMzciLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MDMyNjYsImV4cCI6MTg5NjUyMDMzNH0.3juQubov5S3hfeTGDgzRxmkto6a27s6txZ3uCEo0c2d5UwPkHTP31pm28ddKELid1u8yoFCB4W7NKAY19wIqRw"
     And I set request body with information given in the following table
       | country  | UK                |
-      | county   | Berkshire         |
+      | county   |                   |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
       | postCode | RG1 7EB           |
