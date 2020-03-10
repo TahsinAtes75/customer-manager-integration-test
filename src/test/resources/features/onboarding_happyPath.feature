@@ -1,20 +1,20 @@
 Feature: Customer Onboarding - Happy Path Whole Process
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
 
   @captureEmailHappyPath
   Scenario: Capture Email - Happy Path
     And I set request header content type as JSON
     And I set request body with information given in the following table
-      | email    | onb_happy_path_7@hymnai.com |
+      | email    | onb_happy_path_6@hymnai.com |
       | make     | Apple                       |
       | model    | iphone7                     |
       | serialNo | 12345                       |
     When I POST request to "/v1/customers/onboarding"
     Then response status code should be 200
-    And response body should contain value of "onb_happy_path_7@hymnai.com" for key "email"
+    And response body should contain value of "onb_happy_path_6@hymnai.com" for key "email"
     And response body should contain value of "EMAIL_CAPTURED" for key "onboardingStatus"
     And response body should contain value of "PROSPECT" for key "customerStatus"
     And response body should contain the key "key" with a not-null value
@@ -25,13 +25,13 @@ Feature: Customer Onboarding - Happy Path Whole Process
   ###
   @verifyEmailHappyPath
   Scenario: Verify Email - Happy Path
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkNWY5ZTNkOC03MjVjLTQ1ZjYtOTk4Zi1mZjcyZGQxNWExMDAiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4Mzc2MTc3OSwiZXhwIjoxNTgzODQ4MTc5fQ.v1I399cloKfuoyzCe8U6Fmr2sBHvNr9pDJPHIc9kC-TQxjfqrjQLT7EF6jC8GO4CEebQn2LSJmeEN3aT6KSrog"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4Mzg0NjU0MCwiZXhwIjoxNTgzOTMyOTQwfQ.-WwInAE8KkJqMMnavx6gB76cVmNYHm2f0MJTw-8sgFAkf9eM51LfEoj539EClFovilHMUoWhAs1e56INbCa1rw"
     When I POST request to "/v1/customers/verify"
     Then response status code should be 200
     And response body should be following json
     """
     {
-      "email": "onb_happy_path_7@hymnai.com",
+      "email": "onb_happy_path_6@hymnai.com",
       "onboardingStatus": "EMAIL_VERIFIED",
       "customerStatus": "PROSPECT"
 }
@@ -43,7 +43,7 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @putNameAndDoBHappyPath
   Scenario: Put Name and DoB - Happy Path
     And I set request header content type as JSON
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkNWY5ZTNkOC03MjVjLTQ1ZjYtOTk4Zi1mZjcyZGQxNWExMDAiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM3NjE5OTQsImV4cCI6MTU5MTUzNzk5NH0.ePBnSjBuIg_YGjBKEt_JPRt4588mMAlFvrWsIrIJtEeKLBjnX9r3sJFHcf7YRXvE5E3TN8bMP5DLt2yVEsmnpQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4NDY2MzMsImV4cCI6MTU5MTYyMjYzM30.KfA20DZJrgMyhHdsYAmF7Pm-y2RzDlzBAp3SgI9_Urh5f0C9988emGgkWIa_5mk4IKFZchQIbT1Twyft4ZQKTA"
     And I set request body with information given in the following table
       | givenNames  | Ebru       |
       | surname     | Soysal     |
@@ -53,7 +53,7 @@ Feature: Customer Onboarding - Happy Path Whole Process
     And response body should be following json
   """
   {
-    "email": "onb_happy_path_7@hymnai.com",
+    "email": "onb_happy_path_6@hymnai.com",
     "givenNames": "Ebru",
     "surname": "Soysal",
     "dateOfBirth": "1982-01-01",
@@ -68,16 +68,16 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @putPhoneNumberHappyPath
   Scenario: Put Phone Number - Happy Path
     And I set request header content type as JSON
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkNWY5ZTNkOC03MjVjLTQ1ZjYtOTk4Zi1mZjcyZGQxNWExMDAiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM3NjE5OTQsImV4cCI6MTU5MTUzNzk5NH0.ePBnSjBuIg_YGjBKEt_JPRt4588mMAlFvrWsIrIJtEeKLBjnX9r3sJFHcf7YRXvE5E3TN8bMP5DLt2yVEsmnpQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4NDY2MzMsImV4cCI6MTU5MTYyMjYzM30.KfA20DZJrgMyhHdsYAmF7Pm-y2RzDlzBAp3SgI9_Urh5f0C9988emGgkWIa_5mk4IKFZchQIbT1Twyft4ZQKTA"
     And I set request body with information given in the following table
-      | phone | 449191919197 |
+      | phone | 449191919196 |
     When I POST request to "/v1/customers/phone"
     Then response status code should be 200
     And response body should be following json
   """
   {
-    "email": "onb_happy_path_7@hymnai.com",
-    "phone": "449191919197",
+    "email": "onb_happy_path_6@hymnai.com",
+    "phone": "449191919196",
     "onboardingStatus": "TELEPHONE_CAPTURED",
     "customerStatus": "PROSPECT"
    }
@@ -89,9 +89,9 @@ Feature: Customer Onboarding - Happy Path Whole Process
   ###
   @verifyPhoneNumberHappyPath
   Scenario: Verify Phone Number - Happy Path
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkNWY5ZTNkOC03MjVjLTQ1ZjYtOTk4Zi1mZjcyZGQxNWExMDAiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM3NjE5OTQsImV4cCI6MTU5MTUzNzk5NH0.ePBnSjBuIg_YGjBKEt_JPRt4588mMAlFvrWsIrIJtEeKLBjnX9r3sJFHcf7YRXvE5E3TN8bMP5DLt2yVEsmnpQ"
-    And I set query parameter "phone" with value "449191919197"
-    And I set query parameter "code" with value "375380"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4NDY2MzMsImV4cCI6MTU5MTYyMjYzM30.KfA20DZJrgMyhHdsYAmF7Pm-y2RzDlzBAp3SgI9_Urh5f0C9988emGgkWIa_5mk4IKFZchQIbT1Twyft4ZQKTA"
+    And I set query parameter "phone" with value "449191919196"
+    And I set query parameter "code" with value "024608"
     When I POST request to "/v1/customers/phone/verify"
     Then response status code should be 200
     And response body should contain value of "TELEPHONE_VERIFIED" for key "onboardingStatus"
@@ -104,7 +104,7 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @captureAddressHappyPath
   Scenario: Capture Address - Happy Path
     And I set request header content type as JSON
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkNWY5ZTNkOC03MjVjLTQ1ZjYtOTk4Zi1mZjcyZGQxNWExMDAiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM3NjE5OTQsImV4cCI6MTU5MTUzNzk5NH0.ePBnSjBuIg_YGjBKEt_JPRt4588mMAlFvrWsIrIJtEeKLBjnX9r3sJFHcf7YRXvE5E3TN8bMP5DLt2yVEsmnpQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4NDY2MzMsImV4cCI6MTU5MTYyMjYzM30.KfA20DZJrgMyhHdsYAmF7Pm-y2RzDlzBAp3SgI9_Urh5f0C9988emGgkWIa_5mk4IKFZchQIbT1Twyft4ZQKTA"
     And I set request body with information given in the following table
       | country  | UK             |
       | county   | Berkshire      |
@@ -124,7 +124,7 @@ Feature: Customer Onboarding - Happy Path Whole Process
   @capturePasscodeHappyPath
   Scenario: Capture Passcode - Happy Path
     And I set request header content type as JSON
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkNWY5ZTNkOC03MjVjLTQ1ZjYtOTk4Zi1mZjcyZGQxNWExMDAiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM3NjE5OTQsImV4cCI6MTU5MTUzNzk5NH0.ePBnSjBuIg_YGjBKEt_JPRt4588mMAlFvrWsIrIJtEeKLBjnX9r3sJFHcf7YRXvE5E3TN8bMP5DLt2yVEsmnpQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4NDY2MzMsImV4cCI6MTU5MTYyMjYzM30.KfA20DZJrgMyhHdsYAmF7Pm-y2RzDlzBAp3SgI9_Urh5f0C9988emGgkWIa_5mk4IKFZchQIbT1Twyft4ZQKTA"
     And I set request body with information given in the following table
       | passcode | 123456 |
     When I POST request to "/v1/customers/passcode"

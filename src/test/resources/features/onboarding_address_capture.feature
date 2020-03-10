@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Capture Customer Address
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
     And I set request header content type as JSON
 
 
@@ -25,7 +25,6 @@ Feature: Customer Onboarding - Capture Customer Address
       |                                                                                                                                                                                                                                                                                     |
       | asd                                                                                                                                                                                                                                                                                 |
       | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
-      | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
 
 
   @captureAddressStatus400
@@ -162,7 +161,7 @@ Feature: Customer Onboarding - Capture Customer Address
   # Onboarding token has been taken without verifying the email
   @captureAddressStatus400
   Scenario: Put Name and DoB - Email is not verified
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwMTMxNGI4Ny0zMjg4LTQ3OTEtODRhMy01YTIwOTI3NDkyMzciLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MDMyNjYsImV4cCI6MTg5NjUyMDMzNH0.3juQubov5S3hfeTGDgzRxmkto6a27s6txZ3uCEo0c2d5UwPkHTP31pm28ddKELid1u8yoFCB4W7NKAY19wIqRw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJjMGFkMmJjOS1iYzk0LTRjMWQtYjViYi05MGRiYWY1YmY2ODMiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4MzU3MDYsImV4cCI6MTg5NjUyMDMzNH0.kZnQRZqxwf_BMHqLCAC6_4vojcv-Q_6rCnL-bfLMayHUSAyCiNiB4NAyE4s2OebBWr8RZiPRJv2VL7Sl7r6_jQ"
     And I set request body with information given in the following table
       | country  | UK                |
       | county   |                   |

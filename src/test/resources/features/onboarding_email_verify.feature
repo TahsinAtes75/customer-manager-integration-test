@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Verify Email Notification Token
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
   @verifyEmailStatus401
   Scenario Outline: Verify Email - Verification Token validation
@@ -16,7 +16,6 @@ Feature: Customer Onboarding - Verify Email Notification Token
       |                                                                                                                                                                                                                                                                                     |
       | asd                                                                                                                                                                                                                                                                                 |
       | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
-      | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
 
 
 
@@ -32,11 +31,14 @@ Feature: Customer Onboarding - Verify Email Notification Token
 
 
 
+  ################
+  ## Will be tested again
+  ################
   # Customer's status is ADDRESS_CAPTURED
   # Customer: onb_address_captured@hymnai.com
   @verifyEmailStatus400
   Scenario: Verify Email - Status is incompatible
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIzMzk4MDQyYi0xZDliLTQ5MmUtOTZlZS05YzcxNGJkZTcxNjYiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDkwMjY0NiwiZXhwIjoxODk2NTIwMzM0fQ.5z_wUNsdqn0Ac6Ox1oSzr0C-Fg4cOefP93Bx51e6Xbwl1i1UKEX30fPAW-WR1VojoWUGW6vNVm_GaSdUgrB42A"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlODU2N2FhZi1iZTEwLTRmNDUtOGI1YS1hYzg4MGQ5Yzk1NzYiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MzgzNDc2NCwiZXhwIjoxNTgzOTIxMTY0fQ.46leWRySr9HO5JXKfHR7JVSoYij2Gru6fjgY5kMrz4CC0ORM32xeP8AbkIUzZJ67hKVahbhTXV1LwRmARx0hWg"
     When I POST request to "/v1/customers/verify"
     Then response status code should be 400
     And response body should contain value of "65009" for key "errors[0].code"

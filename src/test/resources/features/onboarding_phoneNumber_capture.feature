@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Capture Customer Phone Number
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
     And I set request header content type as JSON
 
 
@@ -20,7 +20,6 @@ Feature: Customer Onboarding - Capture Customer Phone Number
       |                                                                                                                                                                                                                                                                                     |
       | asd                                                                                                                                                                                                                                                                                 |
       | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
-      | eyJhbGciOiJIUzUxMiJ9.1eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
 
 
   @putPhoneNumberStatus400
@@ -47,9 +46,9 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   # Customer: onb_name_DoB@hymnai.com
   @putPhoneNumberStatus409
   Scenario: Put Phone Number - Phone Number Already Exists
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJmZGM2NmM1My0yM2M2LTQ4MDQtOWE5ZS1lODVkYjVkZGM2NzkiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MDk5NzAsImV4cCI6MTg5NjUyMDMzNH0.yed3pYVacn_Md5ZVI4S8Qh70nbEXZ19nMhcnmp4ACf-STST3kwXmF9BufFR4q_uYmAvvUfUV3gLT4ew-FFCojA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4YTMwN2Y0OS03YTc3LTQ3ZDItOTY0NC1lOTQxZGQ2NjY0MjgiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4MzU5MjcsImV4cCI6MTg5NjUyMDMzNH0.6To4qIsyhO_RhMpBFfWbqkzq7xJXfF-csPSj0f0muYHfudVF0DD_1z6o9Q41512BiKdJN-mD5loXWjZbyrsHng"
     And I set request body with information given in the following table
-      | phone | 447000111101 |
+      | phone | 441112223334 |
     When I POST request to "/v1/customers/phone"
     Then response status code should be 409
     And response body should contain value of "65010" for key "errors[0].code"
@@ -75,16 +74,16 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   ###########################
   @resendSmsCodeStatus200
   Scenario: Resend SMS Code
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkZTcyNGFhNi1kZTAxLTQxYWUtYThkZi02MzE1NmUwMjk2ZGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MTAzODIsImV4cCI6MTg5NjUyMDMzNH0.9dJasgptjkX-QeY-pQMzTHO1TxAZkl4DbQJSrZUYNZzMKDoeHPBnVxglK0KE_lR6bfY6XsCa6h2lLZZmrMdpvw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI0ZTAyMDYwNS0yNjQ4LTRiNzQtYjYzZC1kMzQ1Mjk0MWI0ZTAiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4MzY1MjksImV4cCI6MTg5NjUyMDMzNH0.wyrHYgqYO_wlDTYWG2yC-xKvCxoy3Ci1-efENSjhTxw0XEIwY8cYhGfTgTF6vgqBvDKG3aJo554K8Rlcxb1U9g"
     And I set request body with information given in the following table
-      | phone | 442222222222 |
+      | phone | 441112223335 |
     When I POST request to "/v1/customers/phone"
     Then response status code should be 200
     And response body should be following json
   """
   {
     "email": "onb_resend_sms@hymnai.com",
-    "phone": "442222222222",
+    "phone": "441112223335",
     "onboardingStatus": "TELEPHONE_CAPTURED",
     "customerStatus": "PROSPECT"
   }
@@ -99,7 +98,7 @@ Feature: Customer Onboarding - Capture Customer Phone Number
   ###########################
   @resendSmsCodeStatus400
   Scenario: Resend SMS Code - Status is incompatible
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIzMzk4MDQyYi0xZDliLTQ5MmUtOTZlZS05YzcxNGJkZTcxNjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODA5MTM5MzAsImV4cCI6MTg5NjUyMDMzNH0.Uly9c7-l5bd5W7rfmn8NPWe994aU4a1Qk66XHeL57qg0335Wf_FOHxVC4Kv0vxyJK8WZ3UUqXgBZEef7GHVfAg"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlODU2N2FhZi1iZTEwLTRmNDUtOGI1YS1hYzg4MGQ5Yzk1NzYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4MzY3MzksImV4cCI6MTg5NjUyMDMzNH0.MXAvhvoTjK5A1SBvKIoU7AwdRRdJmj-y6GAP7yVTFbam01QNn5-NEH70AM8Gmrz7OIRWksyC5WwmemKRE1bP3g"
     And I set request body with information given in the following table
       | phone | 443333333332 |
     When I POST request to "/v1/customers/phone"

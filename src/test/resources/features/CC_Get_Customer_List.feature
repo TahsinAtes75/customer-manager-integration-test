@@ -1,7 +1,7 @@
 Feature: Contact Center - Get Customer List
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
 
   @getCustomerListStatus401
@@ -137,7 +137,7 @@ Feature: Contact Center - Get Customer List
   @getCustomerList
   Scenario: Get Customer List - Data Found
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set query parameter "email" with value "onb_happy_path_1@hymnai.com"
+    And I set query parameter "email" with value "onb_happy_path_3@hymnai.com"
     When I GET request to "/v1/customers"
     Then response status code should be 200
     And response body should be following json
@@ -146,12 +146,12 @@ Feature: Contact Center - Get Customer List
       "totalPages": 1,
       "contents": [
         {
-          "email": "onb_happy_path_1@hymnai.com",
+          "email": "onb_happy_path_3@hymnai.com",
           "fullName": "Ebru Soysal",
-          "accountNumber": "10001530",
-          "phoneNumber": "449999999999",
+          "accountNumber": "",
+          "phoneNumber": "449191919193",
           "onboardingStatus": "REGISTRATION_COMPLETE",
-          "key": "87889fe8-b1d2-4685-aaa6-d67f9c3a6697",
+          "key": "3d570139-c34f-4198-a7eb-e003babcc192",
           "customerStatus": "ACTIVE"
         }
       ]
@@ -173,12 +173,13 @@ Feature: Contact Center - Get Customer List
       "totalPages": 1,
       "contents": [
         {
-          "email": "onb_name_DoB@hymnai.com",
+          "email": "onb_happy_path_4@hymnai.com",
           "fullName": "Unique Customer",
           "accountNumber": "",
-          "onboardingStatus": "NAME_DOB_CAPTURED",
-          "key": "fdc66c53-23c6-4804-9a9e-e85db5ddc679",
-          "customerStatus": "PROSPECT"
+          "phoneNumber": "449191919194",
+          "onboardingStatus": "REGISTRATION_COMPLETE",
+          "key": "3a581f48-4c1d-404e-a2ed-378395bd7dd2",
+          "customerStatus": "ACTIVE"
         }
       ]
     }
@@ -198,12 +199,12 @@ Feature: Contact Center - Get Customer List
       "totalPages": 1,
       "contents": [
         {
-          "email": "soysalsoysal@hymnai.com",
+          "email": "onb_happy_path_5@hymnai.com",
           "fullName": "Ebru1 Soysal",
-          "accountNumber": "10001867",
-          "phoneNumber": "441231231231",
+          "accountNumber": "",
+          "phoneNumber": "449191919195",
           "onboardingStatus": "REGISTRATION_COMPLETE",
-          "key": "377c7431-3a43-45d6-a99d-6e77dc2093e9",
+          "key": "d72cbbe9-953c-49e0-abef-24318073ff9d",
           "customerStatus": "ACTIVE"
         }
       ]

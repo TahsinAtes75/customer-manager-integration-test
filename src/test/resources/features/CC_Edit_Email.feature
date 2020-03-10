@@ -86,7 +86,7 @@ Feature: Contact Center - Edit Customer's Email
   @ccEditEmailStatus400
   Scenario Outline: CC Edit Email - Email Validation
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set header "customerKey" parameter with value "e2da6d88-c757-4a0d-88bb-931858b43f99"
+    And I set header "customerKey" parameter with value "fafd64b8-9b70-48fe-960e-7051f3ed7b77"
     And I set request body with information given in the following table
       | email | <emailValue> |
     When I PUT request to "/v1/customers/email"
@@ -109,7 +109,7 @@ Feature: Contact Center - Edit Customer's Email
   @ccEditEmailStatus409
   Scenario Outline: CC Edit Email - Email already exists
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set header "customerKey" parameter with value "68b58412-e5a3-48e9-9f81-2c0616c24ff8"
+    And I set header "customerKey" parameter with value "fafd64b8-9b70-48fe-960e-7051f3ed7b77"
     And I set request body with information given in the following table
       | email | <emailValue> |
     When I PUT request to "/v1/customers/email"
@@ -138,10 +138,10 @@ Feature: Contact Center - Edit Customer's Email
 
     Examples:
       | customerKeyValue                     |
-      | e021ba3e-2296-4b67-8c55-929fe3c053e5 |
-      | 19244b34-ad18-4b57-a616-d6f1df989c06 |
-      | 98ddd5ca-2788-4c4c-8a6e-f2f61781918a |
-      | d960915e-3f4c-4339-b46b-c68c8e972017 |
+      | 627b5b6e-5f4e-467d-859f-be82c7700553 |
+      | 45553bd5-9781-451f-bdac-bcf7ecb6e03c |
+      | d2b8c073-8915-4469-b74f-571fe958a35a |
+      | 3ea117dd-ef3a-4948-8291-d777a5ee4d63 |
 
 
   ## Customer Status: FRAUD, DELETED, SUSPEND
@@ -158,7 +158,7 @@ Feature: Contact Center - Edit Customer's Email
 
     Examples:
       | customerKeyValue                     |
-      | c5671a1f-8ecd-45de-92bc-72f1f8a47cd5 |
-      | de04486a-b1bb-4722-8ee6-a0ec8405df93 |
-      | f0ef9a95-7dd9-4aef-864f-6e60e55f476c |
+      | ba23e57b-66f7-4a5d-afae-2c8d24768996 |
+      | 30ea2993-3c05-45de-a7c0-f469e05e7886 |
+      | 39cce278-c9c4-4b89-a62a-04797c885408 |
 
