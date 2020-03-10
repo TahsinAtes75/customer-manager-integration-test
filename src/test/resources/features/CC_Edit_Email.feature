@@ -1,7 +1,7 @@
 Feature: Contact Center - Edit Customer's Email
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
     And I set request header content type as JSON
 
 
@@ -109,7 +109,7 @@ Feature: Contact Center - Edit Customer's Email
   @ccEditEmailStatus409
   Scenario Outline: CC Edit Email - Email already exists
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set header "customerKey" parameter with value "fafd64b8-9b70-48fe-960e-7051f3ed7b77"
+    And I set header "customerKey" parameter with value "3a581f48-4c1d-404e-a2ed-378395bd7dd2"
     And I set request body with information given in the following table
       | email | <emailValue> |
     When I PUT request to "/v1/customers/email"
@@ -138,10 +138,10 @@ Feature: Contact Center - Edit Customer's Email
 
     Examples:
       | customerKeyValue                     |
-      | 627b5b6e-5f4e-467d-859f-be82c7700553 |
-      | 45553bd5-9781-451f-bdac-bcf7ecb6e03c |
-      | d2b8c073-8915-4469-b74f-571fe958a35a |
-      | 3ea117dd-ef3a-4948-8291-d777a5ee4d63 |
+      | c0ad2bc9-bc94-4c1d-b5bb-90dbaf5bf683 |
+      | 93daeaae-b6e6-4430-91fe-c6c272c6589f |
+      | 8a307f49-7a77-47d2-9644-e941dd666428 |
+      | 62313675-b176-4afb-9395-a3dbccce5658 |
 
 
   ## Customer Status: FRAUD, DELETED, SUSPEND
@@ -158,7 +158,86 @@ Feature: Contact Center - Edit Customer's Email
 
     Examples:
       | customerKeyValue                     |
-      | ba23e57b-66f7-4a5d-afae-2c8d24768996 |
-      | 30ea2993-3c05-45de-a7c0-f469e05e7886 |
-      | 39cce278-c9c4-4b89-a62a-04797c885408 |
+      | dd750b32-e1f2-48e5-89c7-35bfbfad4c55 |
+      | 4ce270ac-7018-496c-b0aa-75f76d8036a1 |
+      | a2ade24b-eafe-4c1b-b64a-28b906b877b1 |
 
+
+  @ccEditEmail
+  Scenario: CC Edit Email - Onboarding Customer
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set header "customerKey" parameter with value "03144623-29e1-491e-bc0b-a124fc4ea1db"
+    And I set request body with information given in the following table
+      | email | new_email_address@hymnai.com |
+    When I PUT request to "/v1/customers/email"
+    Then response status code should be 204
+
+
+  # new_email_address@hymnai.com is already requested by another customer
+  # Its status is pending email
+  @ccEditEmailStatus409
+  Scenario: CC Edit Email - New Email is requested by another customer
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set header "customerKey" parameter with value "e8567aaf-be10-4f45-8b5a-ac880d9c9576"
+    And I set request body with information given in the following table
+      | email | new_email_address@hymnai.com |
+    When I PUT request to "/v1/customers/email"
+    Then response status code should be 409
+    And response body should contain value of "65017" for key "errors[0].code"
+    And response body should contain value of "Change Email request already exists" for key "errors[0].description"
+
+
+  ## After running this code for Customer: e.soysal@hymnai.com
+    # SMS will be sent to customer's phone number
+    # Notification Email will be sent to customer's old email address
+    # Verification link will be sent to customer's new email address
+    # New email address will be stored in pending_email column
+    # Customer status or Onboarding status will not be changed
+  @ccEditEmailHappyPath
+  Scenario: CC Edit Email - Onboarding Customer - Happy Path
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set header "customerKey" parameter with value "cb43de6f-09ec-468a-95c1-120dca35c8d0"
+    And I set request body with information given in the following table
+      | email | soysale@gmail.com |
+    When I PUT request to "/v1/customers/email"
+    Then response status code should be 204
+
+
+  @verifyEmailHappyPath
+  Scenario: Verify Email - Happy Path
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJjYjQzZGU2Zi0wOWVjLTQ2OGEtOTVjMS0xMjBkY2EzNWM4ZDAiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4Mzg1ODM1NCwiZXhwIjoxODk2NTIwMzM0fQ.w62my356ufbtbIGUJq-h3BCiP9DIqkneCqJfgtYqadOZes0NzykcUpatRvXkXJjBFP5y_Zb_Eq7eYx6B932BFA"
+    When I POST request to "/v1/customers/verify"
+    Then response status code should be 200
+    And response body should be following json
+    """
+    {
+      "email": "soysale@gmail.com",
+      "onboardingStatus": "ADDRESS_CAPTURED",
+      "customerStatus": "PROSPECT"
+    }
+    """
+
+
+  @ccEditEmailHappyPath
+  Scenario: CC Edit Email - Active Customer - Happy Path
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
+    And I set header "customerKey" parameter with value "90254135-310a-4b58-bb49-dd2dcce2690a"
+    And I set request body with information given in the following table
+      | email | onb_happy_path_6_1@hymnai.com |
+    When I PUT request to "/v1/customers/email"
+    Then response status code should be 204
+
+
+  @verifyEmailHappyPath
+  Scenario: Verify Email - Happy Path
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5MDI1NDEzNS0zMTBhLTRiNTgtYmI0OS1kZDJkY2NlMjY5MGEiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4Mzg1OTI5NiwiZXhwIjoxODk2NTIwMzM0fQ.YlqS2NnpKUApsDL4PqhfZtOqm4NEVvNQiOADlMJoPLYhbyuz9dpf2nL6drRUqiGC6uDPucmXNZgnPEPH5tYftQ"
+    When I POST request to "/v1/customers/verify"
+    Then response status code should be 200
+    And response body should be following json
+    """
+    {
+      "email": "onb_happy_path_6_1@hymnai.com",
+      "onboardingStatus": "REGISTRATION_COMPLETE",
+      "customerStatus": "ACTIVE"
+    }
+    """
