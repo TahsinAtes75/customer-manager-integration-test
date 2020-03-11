@@ -1,7 +1,7 @@
 Feature: Contact Center - Onboarding Support Re-Send Verification Link
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
 
   @ccResendVerificationLinkStatus401
@@ -74,7 +74,7 @@ Feature: Contact Center - Onboarding Support Re-Send Verification Link
 
 
   # Customer1: onb_address_captured@hymnai.com (ADDRESS_CAPTURED)
-  # Customer2: onb_email_verified@hymnai.com (NAME_DOB_CAPTURED)
+  # Customer2: onb_name_DoB@hymnai.com (NAME_DOB_CAPTURED)
   @ccResendVerificationLinkStatus400
   Scenario Outline: Resend verification link - Incompatible Status
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
@@ -86,25 +86,38 @@ Feature: Contact Center - Onboarding Support Re-Send Verification Link
 
     Examples:
       | keyValue                             |
-      | 3398042b-1d9b-492e-96ee-9c714bde7166 |
-      | fdc66c53-23c6-4804-9a9e-e85db5ddc679 |
+      | e8567aaf-be10-4f45-8b5a-ac880d9c9576 |
+      | 8a307f49-7a77-47d2-9644-e941dd666428 |
 
 
   # Customer: onb_email_captured@hymnai.com
   @ccResendVerificationLink
   Scenario: Resend verification link - Happy Path - EMAIL_CAPTURED
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set header "key" parameter with value "01314b87-3288-4791-84a3-5a2092749237"
+    And I set header "key" parameter with value "c0ad2bc9-bc94-4c1d-b5bb-90dbaf5bf683"
     When I GET request to "/v1/customers/resend-link"
     Then response status code should be 204
 
 
+
+  # Customer: onb_email_verified@hymnai.com
   # Manually set onboarding status as EMAIL_VERIFIED
   # After it runs check DB, onboarding status must be EMAIL_CAPTURED, email_verified field must be set from 1 to 0
   @ccResendVerificationLink
   Scenario: Resend verification link - Happy Path - EMAIL_VERIFIED
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set header "key" parameter with value "3c6d0dc1-39f0-4064-bc77-42d8f24584e7"
+    And I set header "key" parameter with value "93daeaae-b6e6-4430-91fe-c6c272c6589f"
     When I GET request to "/v1/customers/resend-link"
     Then response status code should be 204
 
+
+
+  ######
+  # After resending verification link to the customer, its onboarding status becomes EMAIL_CAPTURED.
+  # To make customer's onboarding status EMAIL_VERIFIED again, run the code below
+  ######
+  @verifyEmail
+  Scenario: Verify Email - onb_email_verified@hymnai.com
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2RhZWFhZS1iNmU2LTQ0MzAtOTFmZS1jNmMyNzJjNjU4OWYiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MzkyMjAxMywiZXhwIjoxNTg0MDA4NDEzfQ.7C9sRHAi7ibd1toOQHeSapl_Y2PcgA7s9B0jJ3qE5z7beTSsAYRCDcdUams3K0RMRCbVvHzFNU_lrL71qX_6zw"
+    When I POST request to "/v1/customers/verify"
+    Then response status code should be 200

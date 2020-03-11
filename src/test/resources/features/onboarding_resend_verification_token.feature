@@ -1,7 +1,7 @@
 Feature: Customer Onboarding - Resend Verification Token
 
   Background:
-    Given I set REST API url as "https://customer-manager.lab.heymanai.com"
+    Given I set REST API url as "https://customer-manager.test.heymanai.com"
 
   ###################################
   ### Resend Verification Token only works for if Onboarding status is either "EMAIL_CAPTURED" OR "EMAIL_VERIFIED"
@@ -40,6 +40,24 @@ Feature: Customer Onboarding - Resend Verification Token
     And response body should contain value of "PROSPECT" for key "customerStatus"
     And response body should contain the key "key" with a not-null value
 
+
+  ###
+  # After resend verification link "onb_resend_token2" customer becomes EMAIL_CAPTURED.
+  # To be able to test this case for EMAIL_VERIFIED customer, it needs to be verified again.
+  ###
+  @verifyEmail
+  Scenario: Verify Email - onb_resend_token2@hymnai.com
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIzMDc5NTNhOS1lMDc0LTQ1ZDAtOTZhYy04MDVhYTQ3NmU3YTkiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MzgzODQwMiwiZXhwIjoxODk2NTIwMzM0fQ.4WodbBoZMdO2wY_M_IkXyX93eq0s_YNrQwQZbmhU_eHt2G7dfXsWt24b8-YtygunG7d4TbaT7f8arYUSrxXORw"
+    When I POST request to "/v1/customers/verify"
+    Then response status code should be 200
+    And response body should be following json
+    """
+    {
+      "email": "onb_resend_token2@hymnai.com",
+      "onboardingStatus": "EMAIL_VERIFIED",
+      "customerStatus": "PROSPECT"
+}
+    """
 
 
   #######
