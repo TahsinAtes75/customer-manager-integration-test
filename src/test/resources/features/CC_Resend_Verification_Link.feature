@@ -100,9 +100,6 @@ Feature: Contact Center - Onboarding Support Re-Send Verification Link
 
 
 
-  ##############
-  ## Will be tested again after the bug is fixed.
-  ##############
   # Customer: onb_email_verified@hymnai.com
   # Manually set onboarding status as EMAIL_VERIFIED
   # After it runs check DB, onboarding status must be EMAIL_CAPTURED, email_verified field must be set from 1 to 0
@@ -115,16 +112,12 @@ Feature: Contact Center - Onboarding Support Re-Send Verification Link
 
 
 
-  ##############
-  ## Will be tested again after the bug is fixed.
-  ##############
-
   ######
   # After resending verification link to the customer, its onboarding status becomes EMAIL_CAPTURED.
   # To make customer's onboarding status EMAIL_VERIFIED again, run the code below
   ######
   @verifyEmail
   Scenario: Verify Email - onb_email_verified@hymnai.com
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2RhZWFhZS1iNmU2LTQ0MzAtOTFmZS1jNmMyNzJjNjU4OWYiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4Mzg0ODM2NywiZXhwIjoxODk2NTIwMzM0fQ.wKtxTswGnzAgV8FCQ18MKsjgCC97yFb8mveoBXxP2e6wPAi4btsp1Ymd8AEo_AevzZrIh5a8c4Kn1GY_hIyduQ"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI5M2RhZWFhZS1iNmU2LTQ0MzAtOTFmZS1jNmMyNzJjNjU4OWYiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MzkyMjAxMywiZXhwIjoxNTg0MDA4NDEzfQ.7C9sRHAi7ibd1toOQHeSapl_Y2PcgA7s9B0jJ3qE5z7beTSsAYRCDcdUams3K0RMRCbVvHzFNU_lrL71qX_6zw"
     When I POST request to "/v1/customers/verify"
     Then response status code should be 200
