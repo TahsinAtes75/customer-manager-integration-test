@@ -31,9 +31,6 @@ Feature: Customer Onboarding - Verify Email Notification Token
 
 
 
-  ################
-  ## Will be tested again
-  ################
   # Customer's status is ADDRESS_CAPTURED
   # Customer: onb_address_captured@hymnai.com
   @verifyEmailStatus400
@@ -41,7 +38,7 @@ Feature: Customer Onboarding - Verify Email Notification Token
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJlODU2N2FhZi1iZTEwLTRmNDUtOGI1YS1hYzg4MGQ5Yzk1NzYiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MzgzNDc2NCwiZXhwIjoxODk2NTIwMzM0fQ.UEiqTrRtc4aza7soagRHv2rGBx7GBrFek93F_G981getKDSjD3ryF4hesdwdMP9I_Q4VdmL8tAQg_04-c4G_eA"
     When I POST request to "/v1/customers/verify"
     Then response status code should be 400
-    And response body should contain value of "65009" for key "errors[0].code"
-    And response body should contain value of "Customer onboarding state is incompatible" for key "errors[0].description"
+    And response body should contain value of "65019" for key "errors[0].code"
+    And response body should contain value of "Email is already verified" for key "errors[0].description"
 
 

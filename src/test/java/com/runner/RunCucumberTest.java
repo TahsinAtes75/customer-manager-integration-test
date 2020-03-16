@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 
         tags = {},
 
-        features = {"src/test/resources/features/CC_Edit_Email.feature"
+        features = {"src/test/resources/features/CC_Edit_Phone_Number.feature"
         },
 
         glue = {"com/hymnai/backend/steps"},
