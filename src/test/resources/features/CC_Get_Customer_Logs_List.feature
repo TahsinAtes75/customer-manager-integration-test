@@ -82,7 +82,7 @@ Feature: Contact Center - Get Customer Logs List
     And response body should contain value of "Access denied" for key "errors[0].description"
 
 
-  #### Will be tested after the bug BANK-1741 is fixed
+
   @getCustomerLogsListStatus400
   Scenario Outline: Get Customer Logs List - endDate Validation
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
@@ -91,18 +91,20 @@ Feature: Contact Center - Get Customer Logs List
     And I set header "key" parameter with value "24fba069-ed4d-4894-b997-00d0038d3abf"
     When I GET request to "/v1/customers/logs"
     Then response status code should be 400
-    And response body should contain value of "65013" for key "errors[0].code"
-    And response body should contain value of "Invalid End Date" for key "errors[0].description"
+    And response body should contain value of "65022" for key "errors[0].code"
+    And response body should contain value of "Failed to convert value" for key "errors[0].description"
     Examples:
       | endDateValue     |
-      |                  |
       | 123              |
+      | asd              |
+      | 2020.04.01       |
       | 2020-04-01       |
       | 2020-04-01T      |
-      | 2020-04-01T00:00 |
+      | 2020-04-01T00    |
 
 
-  #### Will be tested after the bug BANK-1741 is fixed
+
+
   @getCustomerLogsListStatus400
   Scenario Outline: Get Customer Logs List - startDate Validation
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
@@ -111,29 +113,29 @@ Feature: Contact Center - Get Customer Logs List
     And I set header "key" parameter with value "24fba069-ed4d-4894-b997-00d0038d3abf"
     When I GET request to "/v1/customers/logs"
     Then response status code should be 400
-    And response body should contain value of "65013" for key "errors[0].code"
-    And response body should contain value of "Invalid Start Date" for key "errors[0].description"
+    And response body should contain value of "65022" for key "errors[0].code"
+    And response body should contain value of "Failed to convert value" for key "errors[0].description"
     Examples:
       | startDateValue   |
-      |                  |
       | 123              |
+      | asd              |
+      | 2020.04.01       |
       | 2020-04-01       |
       | 2020-04-01T      |
-      | 2020-04-01T00:00 |
+      | 2020-04-01T00    |
 
 
 
-  #### Will be tested after the bug BANK-1741 is fixed
-  @getCustomerLogsListStatus401
+  @getCustomerLogsListStatus400
   Scenario: Get Customer Logs List - endDate is smaller than startDate
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set query parameter "endDate" with value "2020-02-01T00:00:00"
     And I set query parameter "startDate" with value "2020-03-01T00:00:00"
     And I set header "key" parameter with value "24fba069-ed4d-4894-b997-00d0038d3abf"
     When I GET request to "/v1/customers/logs"
-    Then response status code should be 401
-    And response body should contain value of "65013" for key "errors[0].code"
-    And response body should contain value of "endDate can not be smaller than startDate" for key "errors[0].description"
+    Then response status code should be 400
+    And response body should contain value of "65023" for key "errors[0].code"
+    And response body should contain value of "Start date should not after end date" for key "errors[0].description"
 
 
   @getCustomerLogsListStatus400
@@ -153,25 +155,6 @@ Feature: Contact Center - Get Customer Logs List
       |                                       |
       | 123                                   |
       | dummyKeydummyKeydummyKeydummyKeydummy |
-
-
-
-  #### Will be tested after the bug BANK-1742 is fixed
-  @getCustomerLogsListStatus404
-  Scenario Outline: Get Customer Logs List - Customer Not Found
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
-    And I set query parameter "endDate" with value "2020-04-01T00:00:00"
-    And I set query parameter "startDate" with value "2020-03-01T00:00:00"
-    And I set header "key" parameter with value "<keyValue>"
-    When I GET request to "/v1/customers/logs"
-    Then response status code should be 404
-    And response body should contain value of "65011" for key "errors[0].code"
-    And response body should contain value of "Customer not found with key: <keyValue>" for key "errors[0].description"
-
-    Examples:
-      | keyValue                             |
-      | dummyKeydummyKeydummyKeydummyKeydumm |
-      | a1a1a1a1-b2b2-c3c3-d4d4-e5e5e5e5e5e5 |
 
 
   @getCustomerLogsListStatus400
@@ -194,8 +177,7 @@ Feature: Contact Center - Get Customer Logs List
 
 
 
-  #### Will be tested after the bug BANK-1743 is fixed
-  @getCustomerLogsListStatus401
+  @getCustomerLogsListStatus400
   Scenario: Get Customer Logs List - Invalid sortBy Value
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set query parameter "endDate" with value "2020-04-01T00:00:00"
@@ -203,11 +185,9 @@ Feature: Contact Center - Get Customer Logs List
     And I set header "key" parameter with value "24fba069-ed4d-4894-b997-00d0038d3abf"
     And I set query parameter "sortBy" with value "asd"
     When I GET request to "/v1/customers/logs"
-    Then response status code should be 401
-    And response body should contain value of "65000" for key "errors[0].code"
-    And response body should contain value of "Invalid sortBy Value" for key "errors[0].description"
-
-
+    Then response status code should be 400
+    And response body should contain value of "65023" for key "errors[0].code"
+    And response body should contain value of "Sort column not found" for key "errors[0].description"
 
 
   @getCustomerLogsListStatus401
