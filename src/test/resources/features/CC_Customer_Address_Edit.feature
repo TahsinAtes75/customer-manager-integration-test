@@ -10,7 +10,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "<tokenValue>"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    |                   |
@@ -33,7 +33,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "<addressKeyValue>"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    |                   |
@@ -56,7 +56,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value ""
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    |                   |
@@ -65,7 +65,7 @@ Feature: CC - Edit Customer Address
     When I PUT request to "/v1/customers/addresses/{addressKey}"
     Then response status code should be 500
 
-
+    
   @editAddressStatus400
   Scenario Outline: Edit Address - Country Validation Test
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
@@ -80,13 +80,20 @@ Feature: CC - Edit Customer Address
     When I PUT request to "/v1/customers/addresses/{addressKey}"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "country" for key "validationErrors[0].field"
+    And response body should contain value of "code is not acceptable" for key "validationErrors[0].message"
 
     Examples:
-      | countryValue                                        | fieldName | message                       |
-      |                                                     | country   | size must be between 1 and 50 |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | country   | size must be between 1 and 50 |
+      | countryValue                                        |
+      |                                                     |
+      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom |
+      | United Kingdom                                      |
+      | ASD                                                 |
+      | 123                                                 |
+      | UK                                                  |
+      | AB?                                                 |
+      | GB                                                  |
+      | 826                                                 |
 
 
   @editAddressStatus400
@@ -94,7 +101,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | <countyValue>     |
       | line1    | 40 Caversham Road |
       | line2    |                   |
@@ -116,7 +123,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK           |
+      | country  | GBR          |
       | county   | Berkshire    |
       | line1    | <line1Value> |
       | line2    |              |
@@ -139,7 +146,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK             |
+      | country  | GBR            |
       | county   | Berkshire      |
       | line1    | 3 Queen's Road |
       | line2    | <line2Value>   |
@@ -161,7 +168,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK              |
+      | country  | GBR             |
       | county   | Berkshire       |
       | line1    | 3 Queen's Road  |
       | line2    |                 |
@@ -184,7 +191,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK             |
+      | country  | GBR            |
       | county   | Berkshire      |
       | line1    | 3 Queen's Road |
       | line2    |                |
@@ -207,7 +214,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "612589d8-76ab-4285-babb-7e420f3dd7b3"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK             |
+      | country  | GBR            |
       | county   |                |
       | line1    | 3 Queen's Road |
       | line2    |                |
@@ -223,7 +230,7 @@ Feature: CC - Edit Customer Address
       "line2": "${json-unit.ignore}",
       "town": "${json-unit.ignore}",
       "county": "${json-unit.ignore}",
-      "country": "${json-unit.ignore}",
+      "country": "GBR",
       "postCode": "${json-unit.ignore}",
       "onboardingStatus": "${json-unit.ignore}",
       "customerStatus": "${json-unit.ignore}"
@@ -236,7 +243,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a1"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudEVicnUiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTgwMzk5NTg4LCJleHAiOjE4OTU5ODI2NDJ9._Y3wtRJPD0RFAXzxipz3HwXQLypSpwyjrKr1Wt1LD-UuJ0AiN0BOmjPvnXwRBfi24ZMOjDvUwF60JNUmKxMLdA"
     And I set request body with information given in the following table
-      | country  | UK             |
+      | country  | GBR            |
       | county   | Berkshire      |
       | line1    | 3 Queen's Road |
       | line2    |                |
@@ -253,7 +260,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4NTU3ZWU0OC02MWQwLTQ1NDQtOWUxZi02NTE2NmNlZDY4OGQiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAyMTEwMjcsImV4cCI6MTU4MDM2MzQ0Mn0.cJD26vXwTtuQwaT7WgZi0ED2GtGbr8ZxcDMjSu9AwHdOI9EYEvutgD9aSCjDbtPyGlV7BsNutE56KtwMmW-GkA"
     And I set request body with information given in the following table
-      | country  | UK             |
+      | country  | GBR            |
       | county   | Berkshire      |
       | line1    | 3 Queen's Road |
       | line2    |                |
@@ -270,7 +277,7 @@ Feature: CC - Edit Customer Address
     And I set path parameter "addressKey" with value "c81f745b-fb91-4fad-a298-fdb4aaa287a2"
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJmMDYzNTIxOS1kNWQ0LTRmMjctYTk0MS0xZGYxOTJiZmZlM2YiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTgwNDA2NDI2LCJleHAiOjE4OTU5ODI2NDJ9.Kh0pdljjYkGsVccBKz3Bdb5I1jCh0ZJwaBw-eek9XLTTQhqVO9dNekneSp2rP17LSJxIi3eynLZIL8avIpQrtQ"
     And I set request body with information given in the following table
-      | country  | UK             |
+      | country  | GBR            |
       | county   | Berkshire      |
       | line1    | 3 Queen's Road |
       | line2    |                |
