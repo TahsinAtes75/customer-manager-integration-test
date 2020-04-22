@@ -9,7 +9,7 @@ Feature: Customer Onboarding - Capture Customer Address
   Scenario Outline: Capture Address - Onboarding token validation
     And I set header "authorization" parameter with value "<tokenValue>"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    |                   |
@@ -21,10 +21,11 @@ Feature: Customer Onboarding - Capture Customer Address
     And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
     Examples:
-      | tokenValue                                                                                                                                                                                                                                                                          |
-      |                                                                                                                                                                                                                                                                                     |
-      | asd                                                                                                                                                                                                                                                                                 |
-      | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A  |
+      | tokenValue                                                                                                                                                                                                                                                                         |
+      |                                                                                                                                                                                                                                                                                    |
+      | asd                                                                                                                                                                                                                                                                                |
+      | ayJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiIwYTgxMThmNS1jYjljLTQ0NzAtOWUwMC0zMjAyOTA5OGE4MWIiLCJzY29wZSI6IkVNQUlMX1ZFUklGSUNBVElPTiIsImlhdCI6MTU4MDEzNDUxNywiZXhwIjoxNTgwMjIwOTE3fQ.azYVhfG_xvNlpwHoOqWJt_BKlhB4Euz0_s91SEqiB-kLiP1MyKUIMNn3KJR9zUJ_nZrs92Ot-MNBZpbNdMzj2A |
+
 
 
   @captureAddressStatus400
@@ -40,20 +41,27 @@ Feature: Customer Onboarding - Capture Customer Address
     When I POST request to "/v1/customers/addresses"
     Then response status code should be 400
     And response body should contain value of "65000" for key "code"
-    And response body should contain value of "<fieldName>" for key "validationErrors[0].field"
-    And response body should contain value of "<message>" for key "validationErrors[0].message"
+    And response body should contain value of "country" for key "validationErrors[0].field"
+    And response body should contain value of "code is not acceptable" for key "validationErrors[0].message"
 
     Examples:
-      | countryValue                                        | fieldName | message                       |
-      |                                                     | country   | size must be between 1 and 50 |
-      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom | country   | size must be between 1 and 50 |
+      | countryValue                                        |
+      |                                                     |
+      | fsfkhsjfkhsjadfsdfsfkh sjfkhssdfsfkfkhs jbfsfsdfcom |
+      | United Kingdom                                      |
+      | ASD                                                 |
+      | 123                                                 |
+      | UK                                                  |
+      | AB?                                                 |
+      | GB                                                  |
+      | 826                                                 |
 
 
   @captureAddressStatus400
   Scenario Outline: Capture Address - County Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | <countyValue>     |
       | line1    | 40 Caversham Road |
       | line2    |                   |
@@ -74,7 +82,7 @@ Feature: Customer Onboarding - Capture Customer Address
   Scenario Outline: Capture Address - Line1 Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
-      | country  | UK           |
+      | country  | GBR          |
       | county   | Berkshire    |
       | line1    | <line1Value> |
       | line2    | line2        |
@@ -96,7 +104,7 @@ Feature: Customer Onboarding - Capture Customer Address
   Scenario Outline: Capture Address - Line2 Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
-      | country  | UK           |
+      | country  | GBR          |
       | county   | Berkshire    |
       | line1    | line1        |
       | line2    | <line2Value> |
@@ -117,7 +125,7 @@ Feature: Customer Onboarding - Capture Customer Address
   Scenario Outline: Capture Address - PostCode Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
@@ -139,7 +147,7 @@ Feature: Customer Onboarding - Capture Customer Address
   Scenario Outline: Capture Address - Town Validation Test
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiI4ZmM2ODcxNS0zNzY5LTQ1NDQtOWI5OS0wYzJkNTZkYWI1MjYiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODAxMzc2MjksImV4cCI6MTg5NTk4MjY0Mn0.cUbW4miLgJLfTl7eTtTjNTrAM5j1Jg8hmJm6jJGj7NFfYFRzFwlW0glKzAnhAMm6_TCRp6eI_5moVJ46L-8r3g"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   | Berkshire         |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
@@ -163,7 +171,7 @@ Feature: Customer Onboarding - Capture Customer Address
   Scenario: Put Name and DoB - Email is not verified
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJIeW1uYWkiLCJzdWIiOiJjMGFkMmJjOS1iYzk0LTRjMWQtYjViYi05MGRiYWY1YmY2ODMiLCJzY29wZSI6Ik9OQk9BUkRJTkciLCJpYXQiOjE1ODM4MzU3MDYsImV4cCI6MTg5NjUyMDMzNH0.kZnQRZqxwf_BMHqLCAC6_4vojcv-Q_6rCnL-bfLMayHUSAyCiNiB4NAyE4s2OebBWr8RZiPRJv2VL7Sl7r6_jQ"
     And I set request body with information given in the following table
-      | country  | UK                |
+      | country  | GBR               |
       | county   |                   |
       | line1    | 40 Caversham Road |
       | line2    | optional          |
