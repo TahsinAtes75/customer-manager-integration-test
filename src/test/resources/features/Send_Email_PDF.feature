@@ -2,13 +2,13 @@ Feature: Send Email PDF - Backend
 
   Background:
     Given I set REST API url as "https://customer-manager.test.heymanai.com"
+    And I set request header content type as JSON
 
   @sendCustomerStatementEmailStatus401
   Scenario Outline:Send Email PDF - Token validation with veriyf token and invalid token
     And I set header "authorization" parameter with value "<tokenValue>"
-    When I POST request to "/v1/customers/statements"
     And I set request body with information given in the following json
-   """
+ """
    {
   "accountNumber": "****1234",
   "accountType": "Current Account",
@@ -16,7 +16,9 @@ Feature: Send Email PDF - Backend
   "date": "2020-04-30T00:00:00",
   "description": "Basic current account statement",
   "fileName": "47545ea8-7e80-33bb-9e6c-958fd5a080d2_30-04-2020.pdf"
+  }
    """
+    When I POST request to "/v1/customers/statements"
     Then response status code should be 401
     And response body should contain value of "67555" for key "errors[0].code"
     And response body should contain value of "Access token is invalid" for key "errors[0].description"
@@ -34,7 +36,6 @@ Feature: Send Email PDF - Backend
 
   Scenario Outline:Send Email PDF - Token validation with customer token and Onboarding token
     And I set header "authorization" parameter with value "<tokenValue>"
-    When I POST request to "/v1/customers/statements"
     And I set request body with information given in the following json
    """
    {
@@ -44,7 +45,9 @@ Feature: Send Email PDF - Backend
   "date": "2020-04-30T00:00:00",
   "description": "Basic current account statement",
   "fileName": "47545ea8-7e80-33bb-9e6c-958fd5a080d2_30-04-2020.pdf"
+  }
    """
+    When I POST request to "/v1/customers/statements"
     Then response status code should be 403
     And response body should contain value of "65013" for key "errors[0].code"
     And response body should contain value of "Access denied" for key "errors[0].description"
@@ -57,9 +60,8 @@ Feature: Send Email PDF - Backend
   @sendCustomerStatementEmailStatus400
   Scenario:Send Email PDF - Invalid file name
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI4MGVhZjFiNy0xNGE5LTQ4MjYtODY1Mi02MGNjY2JkM2Q2NzkiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudFJhYmlhIiwic2NvcGUiOiJBR0VOVCIsImlhdCI6MTU4Njk2MTQ0MCwiZXhwIjoxOTAyNDk0NDUxfQ.uDshnfLeKykyKy5RQG38VzfNQfRnzAGPgmq9uoUWsrIA2sPrhcAUEo93Xx142LyI8lO24ajkqsRIMUhROhbdKQ"
-    When I POST request to "/v1/customers/statements"
     And I set request body with information given in the following json
-   """
+  """
    {
   "accountNumber": "****1234",
   "accountType": "Current Account",
@@ -67,7 +69,9 @@ Feature: Send Email PDF - Backend
   "date": "2020-04-30T00:00:00",
   "description": "Basic current account statement",
   "fileName": "47545ea8-7e80-33bb-9e6c-958fd5a080d2_30-04-2060.pdf"
+  }
    """
+    When I POST request to "/v1/customers/statements"
     Then response status code should be 400
     And response body should contain value of "65029" for key "errors[0].code"
     And response body should contain value of "Could not find statement file with given details at AWS S3 bucket" for key "errors[0].description"
@@ -77,7 +81,7 @@ Feature: Send Email PDF - Backend
   @sendCustomerStatementEmailStatus204
   Scenario:Send Email PDF happy path
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI4MGVhZjFiNy0xNGE5LTQ4MjYtODY1Mi02MGNjY2JkM2Q2NzkiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudFJhYmlhIiwic2NvcGUiOiJBR0VOVCIsImlhdCI6MTU4Njk2MTQ0MCwiZXhwIjoxOTAyNDk0NDUxfQ.uDshnfLeKykyKy5RQG38VzfNQfRnzAGPgmq9uoUWsrIA2sPrhcAUEo93Xx142LyI8lO24ajkqsRIMUhROhbdKQ"
-    When I POST request to "/v1/customers/statements"
+
     And I set request body with information given in the following json
    """
    {
@@ -87,7 +91,9 @@ Feature: Send Email PDF - Backend
   "date": "2020-04-30T00:00:00",
   "description": "Basic current account statement",
   "fileName": "47545ea8-7e80-33bb-9e6c-958fd5a080d2_30-04-2020.pdf"
+  }
    """
+    When I POST request to "/v1/customers/statements"
     Then response status code should be 204
 
 
