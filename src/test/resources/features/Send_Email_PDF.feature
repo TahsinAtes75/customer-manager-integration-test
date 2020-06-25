@@ -6,6 +6,7 @@ Feature: Send Email PDF - Backend
 
   @sendCustomerStatementEmailStatus204
   Scenario:Send Email - PDF happy path
+
     And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI4MGVhZjFiNy0xNGE5LTQ4MjYtODY1Mi02MGNjY2JkM2Q2NzkiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJBZ2VudFJhYmlhIiwic2NvcGUiOiJBR0VOVCIsImlhdCI6MTU4Njk2MTQ0MCwiZXhwIjoxOTAyNDk0NDUxfQ.uDshnfLeKykyKy5RQG38VzfNQfRnzAGPgmq9uoUWsrIA2sPrhcAUEo93Xx142LyI8lO24ajkqsRIMUhROhbdKQ"
 
     And I set request body with information given in the following json
