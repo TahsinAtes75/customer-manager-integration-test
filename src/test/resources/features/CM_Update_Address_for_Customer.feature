@@ -215,3 +215,18 @@ Feature: CM - Update Address for Customer
     And response body should contain value of "67005" for key "errors[0].code"
     And response body should contain value of "Access token is invalid" for key "errors[0].description"
 
+  @updateAddressStatus403
+  Scenario: Edit Address - Agent Access Token
+    And I set header "addressKey" parameter with value "e58e5815-3854-47d2-a7cf-dc4a6f25279a"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI0OTQzZWYwYi0zMDZlLTRiMGUtODE1Zi01MzRmZDY1MmRiZTYiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkZW1vYWdlbnQiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTkzNTQyNzM0LCJleHAiOjE1OTQxNDc1MzR9.-Nc3mRsQwJXTgEjCZI5W5RB5mRurlovdE9nU9XOlwWONf3pXr5SfervAV0h5GlUY-nsMtLr4ZrnVkS-SN2RxTA"
+    And I set request body with information given in the following table
+      | country  | GBR            |
+      | county   | Berkshire      |
+      | line1    | 3 Queen's Road |
+      | line2    |                |
+      | postCode | RG1 4AR        |
+      | town     | Reading        |
+    When I PUT request to "/v1/customers/addresses"
+    Then response status code should be 403
+    And response body should contain value of "65013" for key "errors[0].code"
+    And response body should contain value of "Access denied" for key "errors[0].description"
