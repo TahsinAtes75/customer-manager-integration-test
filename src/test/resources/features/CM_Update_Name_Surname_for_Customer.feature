@@ -24,7 +24,7 @@ Feature: CM - Update Name Surname for Customer
 
   @updateNameSurnameStatus400
   Scenario Outline: Update Name Surname - Given names Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIwYTI2YjQ3ZS01M2VkLTRkNjgtYjNmZi1jYTE3MGJjZDdlZWQiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiIzZmQ3MzNlMi0wNTNlLTRlYzUtYWIxNi1kZDQzNjVjOTY5MjkiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTk0MjE3ODMxLCJleHAiOjE1OTQ4MjI2MzF9.7yd5LMf9rfqC_GxTiEQ45YOSgaa7XMo8ptosDPJbs58bOhdRa9UITfOdi8QzV9f2_qSqfoKeNbD-DZC3ZGZCzw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJkMDY2ODQ2Yy0yYjM0LTRhY2YtOTMyOC0zN2RlZmY4ZjhkMGIiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJmYmY3MGZkNi03NDNkLTQ4ZTEtOGU3ZC1iY2U2Mzk0ODlmYzgiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTk1NTg2OTc2LCJleHAiOjE1OTYxOTE3NzZ9.jTld1W2qj2WadLILMRFfsCFpZqXBlDPgF8BwwrqcqdjR4BAI2y1QWVBbmXfdWOYlospfZyhCYSZVVXG63iDk_A"
     And I set request body with information given in the following table
       | givenNames  | <givenNamesValue> |
       | surname     | Doe               |
@@ -42,7 +42,7 @@ Feature: CM - Update Name Surname for Customer
 
   @updateNameSurnameStatus400
   Scenario Outline: Update Name Surname- Surname Validation Test
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIwYTI2YjQ3ZS01M2VkLTRkNjgtYjNmZi1jYTE3MGJjZDdlZWQiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiIzZmQ3MzNlMi0wNTNlLTRlYzUtYWIxNi1kZDQzNjVjOTY5MjkiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTk0MjE3ODMxLCJleHAiOjE1OTQ4MjI2MzF9.7yd5LMf9rfqC_GxTiEQ45YOSgaa7XMo8ptosDPJbs58bOhdRa9UITfOdi8QzV9f2_qSqfoKeNbD-DZC3ZGZCzw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJkMDY2ODQ2Yy0yYjM0LTRhY2YtOTMyOC0zN2RlZmY4ZjhkMGIiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJmYmY3MGZkNi03NDNkLTQ4ZTEtOGU3ZC1iY2U2Mzk0ODlmYzgiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTk1NTg2OTc2LCJleHAiOjE1OTYxOTE3NzZ9.jTld1W2qj2WadLILMRFfsCFpZqXBlDPgF8BwwrqcqdjR4BAI2y1QWVBbmXfdWOYlospfZyhCYSZVVXG63iDk_A"
     And I set request body with information given in the following table
       | givenNames  | John          |
       | surname     | <surnameValue>|
@@ -60,7 +60,7 @@ Feature: CM - Update Name Surname for Customer
 
   @updateNameSurnameStatus200
   Scenario: Update Name Surname - Happy Path
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIwYTI2YjQ3ZS01M2VkLTRkNjgtYjNmZi1jYTE3MGJjZDdlZWQiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiIzZmQ3MzNlMi0wNTNlLTRlYzUtYWIxNi1kZDQzNjVjOTY5MjkiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTk0MjE3ODMxLCJleHAiOjE1OTQ4MjI2MzF9.7yd5LMf9rfqC_GxTiEQ45YOSgaa7XMo8ptosDPJbs58bOhdRa9UITfOdi8QzV9f2_qSqfoKeNbD-DZC3ZGZCzw"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJkYTMzYTM1ZC0xMmI0LTQ2ZGMtOGMyYy1mOGI5NjAyZWMzNTAiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiIyNWM1MDI1YS00NGMzLTQ0N2MtYmNlNy1lN2U5MjIwM2UzNjIiLCJzY29wZSI6IkNVU1RPTUVSIiwiaWF0IjoxNTk1NTg3NDY0LCJleHAiOjE1OTYxOTIyNjR9.QlqfVsA7bCCncozk7ZprwfWMJPX_L3xA_Uai8Bsp0lHv7VNCbdlUzMtlid-6_UDkFplUUhnSob7JRFIAewbFpQ"
     And I set request body with information given in the following table
       | givenNames  | John       |
       | surname     | Doe        |
@@ -80,7 +80,7 @@ Feature: CM - Update Name Surname for Customer
 
   @updateNameSurnameStatus403
   Scenario: Update Name Surname - Agent Access Token
-    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI0OTQzZWYwYi0zMDZlLTRiMGUtODE1Zi01MzRmZDY1MmRiZTYiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJkZW1vYWdlbnQiLCJzY29wZSI6IkFHRU5UIiwiaWF0IjoxNTkzNTQyNzM0LCJleHAiOjE1OTQxNDc1MzR9.-Nc3mRsQwJXTgEjCZI5W5RB5mRurlovdE9nU9XOlwWONf3pXr5SfervAV0h5GlUY-nsMtLr4ZrnVkS-SN2RxTA"
+    And I set header "authorization" parameter with value "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJhN2MxNzkyMS1iNDdlLTRiNjYtODBjOS1iNjQ3ZDYxNzFiMWUiLCJpc3MiOiJIeW1uYWkiLCJzdWIiOiJhZ2VudDIzIiwic2NvcGUiOiJBR0VOVCIsImlhdCI6MTU5NTU4NjY2NCwiZXhwIjoxNTk2MTkxNDY0fQ.gyC-X7GdwvENnetTFs5pta5k-uaCeypBh-OzHvC08T-Cp0FDeLT0oGTlX15g5T9HNjmWYCfs2RifXpundcSEDQ"
     And I set request body with information given in the following table
       | givenNames  | John       |
       | surname     | Doe        |
