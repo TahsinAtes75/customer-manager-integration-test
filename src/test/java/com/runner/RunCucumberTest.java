@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 
         tags = {},
 
-        features = {"src/test/resources/features/CM_Documents_Service_Delete_Document_Note.feature"
+        features = {"src/test/resources/features/CM_Get_Customer_By_CustomerKey_forAgent.feature"
         },
 
         glue = {"com/hymnai/backend/steps"},
