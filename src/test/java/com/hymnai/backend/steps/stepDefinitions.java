@@ -1,25 +1,21 @@
 package com.hymnai.backend.steps;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+
 import com.hymnai.backend.exception.BackendTestException;
+import com.mailslurp.models.Email;
+import com.mailslurp.models.Inbox;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import mailslurpmodels.Email;
-import mailslurpmodels.Inbox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.hamcrest.Matchers;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.hamcrest.Matchers.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class stepDefinitions extends Base{
 
@@ -28,7 +24,7 @@ public class stepDefinitions extends Base{
     private static final String AUTHORIZATION = "authorization";
     private final Logger LOGGER = LoggerFactory.getLogger(AssertionSteps.class);
     static Map<Integer, Integer> globalValues = new HashMap();
-    static final String BASE_URL = "https://banking-web.dev.heymanai.com/email-verification/";
+    static final String BASE_URL = "https://banking-web.test.heymanai.com/email-verification/";
 
     private int getGlobalValue(int key) {
         return globalValues.containsKey(key) ? globalValues.get(key) : key;
@@ -69,25 +65,9 @@ public class stepDefinitions extends Base{
             String request = createRequestAsJson(inbox.getEmailAddress());
             reqSpec.given().body(request);
             response = (Response)reqSpec.when().post(url, new Object[0]);
-            Email email = emailProvider.getLatestEmail(inbox.getEmailAddress());
+            Email email = emailProvider.getLatestEmail(inbox.getId());
             String jwt = parseJWT(email.getBody());
             addHeaderParameter(AUTHORIZATION, jwt);
-        } catch (Exception e) {
-            throw new BackendTestException(e, this.LOGGER);
-        }
-    }
-
-    @When("I POST request with email {string} to {string}")
-    public void captureEmailAndAddJwtToHeader(String emailAddress, String url) throws BackendTestException {
-        try {
-            EmailProvider emailProvider = new EmailProvider();
-            String request = createRequestAsJson(emailAddress);
-            reqSpec.given().body(request);
-            response = (Response) reqSpec.when().post(url, new Object[0]);
-            Email email = emailProvider.getLatestEmail(emailAddress);
-            String jwt = parseJWT(email.getBody());
-            addHeaderParameter(AUTHORIZATION, jwt);
-            Base.globalValues.put(AUTHORIZATION, jwt);
         } catch (Exception e) {
             throw new BackendTestException(e, this.LOGGER);
         }
@@ -103,16 +83,13 @@ public class stepDefinitions extends Base{
         return jwt;
     }
     private String createRequestAsJson(String emailAddress) {
-        String json =
-        "{\n"
-            + "  \"email\": \"" + emailAddress +"\",\n"
-            + "  \"make\": \"string\",\n"
-            + "  \"model\": \"string\",\n"
-            + "  \"serialNo\": \"string\"\n"
-            + "}";
+        String json = "{\"email\":\"" + emailAddress + "\","
+            + "\"make\":\"string\","
+            + "\"model\":\"string\","
+            + "\"password\":\"Q1a2z34!\","
+            + "\"serialNo\":\"string\"}";
         return json;
     }
-
 }
 
 

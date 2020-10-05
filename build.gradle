@@ -9,13 +9,15 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 11
 
 repositories {
-    maven { url 'https://jitpack.io' }
     mavenCentral()
+    // jitpack for mailslurp
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
 
-    compile 'com.github.mailslurp:swagger-sdk-java:900a94e754'
+    // mailslurp client
+    testCompile 'com.github.mailslurp:mailslurp-client-java:7.0.11-RELEASE'
 
     testCompile 'junit:junit:4.12'
     testCompile 'net.javacrumbs.json-unit:json-unit-fluent:2.8.0'
